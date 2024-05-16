@@ -15,4 +15,5 @@ linker.py
 
 .vscode
 .idea
+venv/
 
