@@ -3,6 +3,8 @@ dist
 *.egg-info
 *.pyc
 
+build/
+
 docs/_build
 docs/_static
 docs/_templates
