@@ -1,8 +1,13 @@
+
+from typing import List
+
+import numpy as np
+
 from .cell import get_merge_direction
 from .cell import merge_cells
 
 
-def merge_all_cells(cells):
+def merge_all_cells(cells: List):
     """
     Loop through list of cells and piece them together one by one
 
@@ -15,6 +20,9 @@ def merge_all_cells(cells):
     grid_table : str
         The final grid table
     """
+
+    checked = np.zeros((len(cells), len(cells)), dtype=bool)
+
     current = 0
 
     while len(cells) > 1:
@@ -25,7 +33,16 @@ def merge_all_cells(cells):
             cell2 = cells[count]
 
             merge_direction = get_merge_direction(cell1, cell2)
-            if not merge_direction == "NONE":
+            if merge_direction == "NONE":
+
+                if checked[current, count]:  # already checked
+                    if checked.all():  # if all combinations checked -- raise infinite loop error
+                        from ..exceptions import NonMergableException
+                        raise NonMergableException('current cells cannot be merged due to too heavy structure')
+
+                checked[current, count] = True
+                count += 1
+            else:
                 merge_cells(cell1, cell2, merge_direction)
 
                 if current > count:
@@ -33,8 +50,7 @@ def merge_all_cells(cells):
 
                 cells.pop(count)
 
-            else:
-                count += 1
+                checked = np.zeros((len(cells), len(cells)), dtype=bool)
 
         current += 1
 
