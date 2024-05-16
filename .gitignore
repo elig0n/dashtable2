@@ -12,3 +12,7 @@ docs/html
 
 linker.py
 
+
+.vscode
+.idea
+
