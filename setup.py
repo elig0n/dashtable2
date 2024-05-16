@@ -1,7 +1,11 @@
+
+from pathlib import Path
+
 from setuptools import setup
 
+
 setup(
-    name='dashtable',
+    name='dashtable2',
     packages=[
         'dashtable',
         'dashtable.dashutils',
@@ -15,12 +19,11 @@ setup(
         'dashtable.html2data.restructify',
         'dashtable.html2data.restructify.converters'
     ],
-    version='1.4.5',
+    version=Path('version.txt').read_text(encoding='utf-8').strip(),
     description='A library for converting a HTML tables into ASCII tables, rowspan and colspan allowed!',
     long_description=open('README.rst').read(),
-    author='doakey3 & gustavklopp',
-    author_email='dashtable.dmodo@spamgourmet.com',
-    url='https://github.com/doakey3/DashTable',
-    download_url='https://github.com/doakey3/DashTable/tarball/1.4.5',
+    author='doakey3 & gustavklopp & pasaopasen',
+    author_email='qtckpuhdsa@gmail.com',
+    url='https://github.com/PasaOpasen/dashtable2',
     license='MIT',
 )

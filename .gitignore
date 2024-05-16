@@ -17,3 +17,6 @@ linker.py
 .idea
 venv/
 
+repo-utils
+pypi.sh
+
