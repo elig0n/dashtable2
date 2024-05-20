@@ -29,7 +29,7 @@ setuptools.setup(
     version=Path('version.txt').read_text(encoding='utf-8').strip(),
 
     description='A library for converting a HTML tables into ASCII tables, rowspan and colspan allowed!',
-    long_description=open('README.rst').read(),
+    long_description=open('README.md').read(),
 
     author='doakey3 & gustavklopp & pasaopasen',
     author_email='qtckpuhdsa@gmail.com',
