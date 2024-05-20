@@ -1,5 +1,5 @@
+
+-r ../requirements.txt
+
 sphinxcontrib-napoleon
 sphinx_rtd_theme
-bs4
-docutils
-numpy

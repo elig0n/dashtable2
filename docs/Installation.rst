@@ -1,5 +1,5 @@
 Installation
 ============
-dashtable can be installed using pip::
+dashtable2 can be installed using pip::
 
-    sudo pip install dashtable
+    pip install dashtable2

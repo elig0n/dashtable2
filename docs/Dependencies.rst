@@ -4,6 +4,7 @@ Several of the functions in dashtable have no outside requirements.
 However, for the following functions you will need to install certain
 dependencies:
 
+:data2rst: numpy_,
 :html2rst: BeautifulSoup_,
 :html2md: BeautifulSoup_
 :html2data: BeautifulSoup_,
@@ -12,3 +13,4 @@ dependencies:
 
 .. _docutils: http://docutils.sourceforge.net/
 .. _BeautifulSoup: https://www.crummy.com/software/BeautifulSoup/
+.. _numpy: https://numpy.org/
