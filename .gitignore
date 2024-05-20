@@ -19,6 +19,8 @@ linker.py
 .idea
 venv/
 
+tmp
+
 repo-utils
 pypi.sh
 

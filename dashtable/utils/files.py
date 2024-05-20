@@ -80,3 +80,10 @@ def read_text(result_path: PathLike, encoding: str = 'utf-8'):
     return Path(result_path).read_text(encoding=encoding, errors='ignore')
 
 
+def read_json(path: PathLike):
+    import json
+    with open(path, 'r', encoding='utf-8') as f:
+        return json.load(f)
+
+
+
