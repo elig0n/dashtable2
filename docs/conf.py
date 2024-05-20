@@ -118,7 +118,7 @@ html_sidebars = {
 # -- Options for HTMLHelp output ------------------------------------------
 
 # Output file base name for HTML help builder.
-htmlhelp_basename = 'dashtabledoc'
+htmlhelp_basename = 'dashtable2_doc'
 
 
 # -- Options for LaTeX output ---------------------------------------------
@@ -145,7 +145,7 @@ latex_elements = {
 # (source start file, target name, title,
 #  author, documentclass [howto, manual, or own class]).
 latex_documents = [
-    (master_doc, 'dashtable.tex', 'dashtable Documentation',
+    (master_doc, 'dashtable2.tex', 'dashtable2 Documentation',
      'doakey3', 'manual'),
 ]
 
@@ -155,7 +155,7 @@ latex_documents = [
 # One entry per manual page. List of tuples
 # (source start file, name, description, authors, manual section).
 man_pages = [
-    (master_doc, 'dashtable', 'dashtable Documentation',
+    (master_doc, 'dashtable2', 'dashtable2 Documentation',
      [author], 1)
 ]
 
@@ -166,8 +166,8 @@ man_pages = [
 # (source start file, target name, title, author,
 #  dir menu entry, description, category)
 texinfo_documents = [
-    (master_doc, 'dashtable', 'dashtable Documentation',
-     author, 'dashtable', 'One line description of project.',
+    (master_doc, 'dashtable2', 'dashtable2 Documentation',
+     author, 'dashtable2', 'One line description of project.',
      'Miscellaneous'),
 ]
 
