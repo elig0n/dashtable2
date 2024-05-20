@@ -8,6 +8,7 @@ sys.path.insert(0, os.path.abspath(file_path))
 
 import dashtable
 
+
 class TestMatches(unittest.TestCase):
     def setUp(self):
         self.static_path = os.path.join(file_path, 'tests', 'static')
@@ -43,5 +44,7 @@ class TestMatches(unittest.TestCase):
                 except AssertionError:
                     print('MATCH ERROR: ' + ntpath.basename(html_path))
 
+
 if __name__ == '__main__':
     unittest.main()
+
