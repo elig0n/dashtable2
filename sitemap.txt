@@ -1,3 +1,8 @@
+https://pasaopasen.github.io/PasaOpasen/dashtable2/
+https://pasaopasen.github.io/PasaOpasen/dashtable2/About.html
+https://pasaopasen.github.io/PasaOpasen/dashtable2/Code.html
+https://pasaopasen.github.io/PasaOpasen/dashtable2/Dependencies.html
+https://pasaopasen.github.io/PasaOpasen/dashtable2/Installation.html
 https://pasaopasen.github.io/PasaOpasen/dashtable2/docs.latest/
 https://pasaopasen.github.io/PasaOpasen/dashtable2/docs.latest/About.html
 https://pasaopasen.github.io/PasaOpasen/dashtable2/docs.latest/Code.html
@@ -6,3 +11,6 @@ https://pasaopasen.github.io/PasaOpasen/dashtable2/docs.latest/Installation.html
 https://pasaopasen.github.io/PasaOpasen/dashtable2/docs.latest/gen
 https://pasaopasen.github.io/PasaOpasen/dashtable2/docs.latest/py-mod
 https://pasaopasen.github.io/PasaOpasen/dashtable2/docs.latest/search.html
+https://pasaopasen.github.io/PasaOpasen/dashtable2/gen
+https://pasaopasen.github.io/PasaOpasen/dashtable2/py-mod
+https://pasaopasen.github.io/PasaOpasen/dashtable2/search.html
