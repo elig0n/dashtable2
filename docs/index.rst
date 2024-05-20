@@ -11,6 +11,7 @@ Welcome to dashtable's documentation!
     :caption: Contents:
 
     About
+    Changelog
     Installation
     Dependencies
     Code
