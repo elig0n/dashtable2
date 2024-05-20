@@ -23,8 +23,7 @@ head=$(git rev-parse HEAD)
 
 git clone -b gh-pages "https://pasaopasen:$GH_PASSWORD@github.com/$GITHUB_REPOSITORY.git" gh-pages
 mkdir -p gh-pages/
-cp -R build/html/* gh-pages/
-cp -R build/html/.* gh-pages/
+cp -rT build/html/* gh-pages/
 cd gh-pages
 sitemap
 git add *
