@@ -1,21 +1,25 @@
+
 import os
 import sys
+from pathlib import Path
 
-file_path = os.path.abspath(os.path.join(os.path.dirname(__file__), '..'))
-sys.path.insert(0, os.path.abspath(file_path))
+PROJECT_PATH = Path(__file__).parents[1]
+
+sys.path.insert(0, str(PROJECT_PATH))
 
 import dashtable
+from dashtable.utils.files import read_text
 
-path = os.path.join(os.getcwd(), 'static')
+test_docs = os.path.join(PROJECT_PATH, 'tests', 'static')
 
-for file in os.listdir(path):
+for file in os.listdir(test_docs):
     if file.endswith('.html'):
-        text = open(os.path.join(path, file), 'r', encoding='UTF-8').read()
+        text = read_text(os.path.join(test_docs, file))
+
         data, spans, use_headers = dashtable.html2data(text)
         if not data == '':
             table = dashtable.data2rst(data, spans, use_headers=True, center_cells=True, center_headers=True)
             try:
                 print(table)
             except UnicodeEncodeError:
-
                 print(table.encode('utf-8'))
