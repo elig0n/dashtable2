@@ -122,10 +122,29 @@ def merge_cells(cell1: Cell, cell2: Cell, direction: MERGE_DIRECTION):
     cell2_lines = cell2.text.split("\n")
 
     if direction == "RIGHT":
-        for i in range(len(cell1_lines)):
-            cell1_lines[i] = cell1_lines[i] + cell2_lines[i][1:]
-        cell1.text = "\n".join(cell1_lines)
+        border = _merge_border_strings(
+            ''.join(line[-1] for line in cell1_lines),
+            ''.join(line[0] for line in cell2_lines)
+        )
+        cell1.text = "\n".join(
+            line1[:-1] + s + line2[1:]
+            for line1, s, line2 in zip(cell1_lines, border, cell2_lines)
+        )
         cell1.column_count += cell2.column_count
+
+    elif direction == "LEFT":
+
+        border = _merge_border_strings(
+            ''.join(line[0] for line in cell1_lines),
+            ''.join(line[-1] for line in cell2_lines)
+        )
+        cell1.text = "\n".join(
+            line2[:-1] + s + line1[1:]
+            for line1, s, line2 in zip(cell1_lines, border, cell2_lines)
+        )
+        cell1.column_count += cell2.column_count
+        cell1.row = cell2.row
+        cell1.column = cell2.column
 
     elif direction == "TOP":
 
@@ -156,14 +175,4 @@ def merge_cells(cell1: Cell, cell2: Cell, direction: MERGE_DIRECTION):
         ] + cell2_lines[1:]
         cell1.text = "\n".join(new_lines)
         cell1.row_count += cell2.row_count
-
-    elif direction == "LEFT":
-        for i in range(len(cell1_lines)):
-            cell1_lines[i] = cell2_lines[i][:-1] + cell1_lines[i]
-        cell1.text = "\n".join(cell1_lines)
-        cell1.column_count += cell2.column_count
-        cell1.row = cell2.row
-        cell1.column = cell2.column
-
-
 
