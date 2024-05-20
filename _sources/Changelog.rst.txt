@@ -1,6 +1,9 @@
 Changelog
 =====
 
+* 1.4.8
+    - same fix as **1.4.7** but for LEFT and RIGHT
+
 * 1.4.7
     - fix `merge_cells` error on complicated TOP and BOTTOM cases
 
