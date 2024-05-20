@@ -6,7 +6,8 @@ doctest:  		##@Test perform doctests, add ./docrender after big refactor
 
 pytest:
 	python -m pytest \
-		./tests/test.py
+		./tests/test.py \
+		./tests/test_in_out.py 
 
 
 test: doctest pytest

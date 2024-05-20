@@ -86,4 +86,13 @@ def read_json(path: PathLike):
         return json.load(f)
 
 
+def read_file(path: PathLike):
+
+    s = Path(path).suffix
+    if s == '.json':
+        return read_json(path)
+    if s == '.txt':
+        return read_text(path)
+
+    raise NotImplemented(f"no processing for ext {s} of file {path}")
 
