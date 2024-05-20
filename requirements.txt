@@ -2,4 +2,5 @@
 bs4
 docutils
 numpy
+typing_extensions
 
