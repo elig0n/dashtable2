@@ -1,8 +1,20 @@
 About
 =====
-dashtable has functions for converting data to reStructuredText
-tables and Markdown tables, as well as methods for generating data from
+**dashtable** has functions for converting data to `reStructuredText`
+tables and `Markdown` tables, as well as methods for generating data from
 these text-tables.
+
+**dashtable2** is the supported **dashtable** fork primary with bugfixes
+
+dashtable2 changelog
+----
+
+* 1.4.6
+    - add `requirements.txt` required to be installed on the package installation (all deps were optional and required to be installed manually on demand)
+
+* 1.4.5
+    - forked from **dashtable==1.4.5** (https://github.com/doakey3/DashTable) after 6 years without commits
+    - update *data2rst* function to raise `NonMergableException` in case of infinite loop
 
 Methods
 -------
