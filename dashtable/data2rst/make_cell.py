@@ -4,7 +4,7 @@ from ..dashutils.spans import get_span_char_width, get_span_char_height, get_spa
 from .cell import Cell
 
 
-def make_cell(table, span, widths, heights, use_headers):
+def make_cell(table, span, widths, heights, use_headers) -> Cell:
     """
     Convert the contents of a span of the table to a grid table cell
 

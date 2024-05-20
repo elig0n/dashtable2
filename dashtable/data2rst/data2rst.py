@@ -108,7 +108,7 @@ def data2rst(
         cell = make_cell(table, span, widths, heights, use_headers)
         cells.append(cell)
 
-    cells = list(sorted(cells))
+    cells = sorted(cells)
 
     if center_cells:
         for cell in cells:
