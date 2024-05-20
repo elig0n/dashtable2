@@ -38,7 +38,7 @@ def merge_all_cells(cells: List):
                 if checked[current, count]:  # already checked
                     if checked.all():  # if all combinations checked -- raise infinite loop error
                         from ..exceptions import NonMergableException
-                        raise NonMergableException('current cells cannot be merged due to too heavy structure')
+                        raise NonMergableException('current cells cannot be merged due to too complicated structure')
 
                 checked[current, count] = True
                 count += 1

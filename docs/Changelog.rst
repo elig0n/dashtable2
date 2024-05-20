@@ -1,6 +1,9 @@
 Changelog
 =====
 
+* 1.4.7
+    - fix `merge_cells` error on complicated TOP and BOTTOM cases
+
 * 1.4.6
     - add `requirements.txt` required to be installed on the package installation (all deps were optional and required to be installed manually on demand)
     - fix tests
