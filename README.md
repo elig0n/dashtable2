@@ -11,3 +11,5 @@ version](https://badge.fury.io/py/dashtable2.svg)](https://pypi.org/project/dash
 pip install dashtable2
 ```
 
+Documentation: https://pasaopasen.github.io/dashtable2/
+
