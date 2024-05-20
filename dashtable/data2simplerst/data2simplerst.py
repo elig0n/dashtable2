@@ -10,6 +10,7 @@ from .row_includes_spans import row_includes_spans
 
 import copy
 
+
 def data2simplerst(table, spans=[[[0, 0]]], use_headers=True, headers_row=0):
     """
     Convert table data to a simple rst table
@@ -46,7 +47,7 @@ def data2simplerst(table, spans=[[[0, 0]]], use_headers=True, headers_row=0):
     >>> spans = [
     ...     [ [0, 0], [0, 1] ]
     ... ]
-    >>> print(data2simplerst(table, spans, headers_row=1))
+    >>> print(data2simplerst(table, spans, headers_row=1).strip())
     ======  =====  ======
        Inputs      Output
     -------------  ------

@@ -57,22 +57,23 @@ def data2rst(table, spans=[[[0, 0]]], use_headers=True,
     >>> table = [
     ...     ["Header 1", "Header 2", "Header 3"],
     ...     ["body row 1", "column 2", "column 3"],
-    ...     ["body row 2", "Cells may span columns", ""],
-    ...     ["body row 3", "Cells may span rows.", "- Cells\\n-contain\\n-blocks"],
+    ...     ["body row 2", "Cells may span columns.", ""],
+    ...     ["body row 3", "Cells may\\nspan rows.", "- Cells\\n- contain\\n- blocks."],
     ...     ["body row 4", "", ""],
     ... ]
-    >>> print(dashtable.data2rst(table, spans))
-    +------------+------------+-----------+
-    | Header 1   | Header 2   | Header 3  |
-    +============+============+===========+
-    | body row 1 | column 2   | column 3  |
-    +------------+------------+-----------+
-    | body row 2 | Cells may span columns.|
-    +------------+------------+-----------+
-    | body row 3 | Cells may  | - Cells   |
-    +------------+ span rows. | - contain |
-    | body row 4 |            | - blocks. |
-    +------------+------------+-----------+
+    >>> print(data2rst(table, spans))
+    +------------+-------------+-----------+
+    | Header 1   | Header 2    | Header 3  |
+    +============+=============+===========+
+    | body row 1 | column 2    | column 3  |
+    +------------+-------------+-----------+
+    | body row 2 | Cells may span columns. |
+    +------------+-------------+-----------+
+    | body row 3 | Cells may   | - Cells   |
+    +------------+ span rows.  | - contain |
+    | body row 4 |             | - blocks. |
+    +------------+-------------+-----------+
+
     """
 
     table = copy.deepcopy(table)

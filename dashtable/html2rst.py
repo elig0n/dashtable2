@@ -64,12 +64,12 @@ def html2rst(html_string, force_headers=False, center_cells=False,
     ... '''
     >>> import dashtable
     >>> print(dashtable.html2rst(html_text))
-    +---------------------+----------------+--------------+
-    | Header 1            | Header 2       | Header 3     |
-    +=====================+================+==============+
-    | This is a paragraph | -  List item 1 | #. Ordered 1 |
-    |                     | -  List item 2 | #. Ordered 2 |
-    +---------------------+----------------+--------------+
+    +---------------------+---------------+--------------+
+    | Header 1            | Header 2      | Header 3     |
+    +=====================+===============+==============+
+    | This is a paragraph | * List item 1 | 1. Ordered 1 |
+    |                     | * List item 2 | 2. Ordered 2 |
+    +---------------------+---------------+--------------+
 
     .. _BeautifulSoup: https://www.crummy.com/software/BeautifulSoup/
     """

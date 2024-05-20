@@ -54,7 +54,7 @@ def simple2data(text):
     [['Inputs', 'Output', ''],
      ['A', 'B', 'A or B'],
      ['False', 'False', 'False'],
-     ['True, 'False', 'True'],
+     ['True', 'False', 'True'],
      ['False', 'True', 'True'],
      ['True', 'True', 'True']]
     >>> print(spans)
