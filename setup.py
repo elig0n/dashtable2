@@ -30,6 +30,7 @@ setuptools.setup(
 
     description='A library for converting a HTML tables into ASCII tables, rowspan and colspan allowed!',
     long_description=open('README.md').read(),
+    long_description_content_type="text/markdown",
 
     author='doakey3 & gustavklopp & pasaopasen',
     author_email='qtckpuhdsa@gmail.com',
