@@ -1,10 +1,46 @@
+
+from typing import List, Any, Sequence, Tuple
+
 import copy
 
-from .get_span_row_count import get_span_row_count
-from .get_span_column_count import get_span_column_count
+from dashtable.dashutils.spans import get_span_row_count, get_span_column_count
 
 
-def check_span(span, table):
+def check_table(table: List[List[Any]]):
+    """
+    Ensure the table is valid for converting to grid table.
+
+    * The table must a list of lists
+    * Each row must contain the same number of columns
+    * The table must not be empty
+
+    Parameters
+    ----------
+    table : list of lists of str
+        The list of rows of strings to convert to a grid table
+
+    Returns
+    -------
+    message : str
+        If no problems are found, this message is empty, otherwise it
+        tries to describe the problem that was found.
+    """
+    if not isinstance(table, list):
+        return "Table must be a list of lists"
+
+    if not table:
+        return "Table must contain at least one row and one column"
+
+    for i in range(len(table)):
+        if not isinstance(table[i], list):
+            return "Table must be a list of lists"
+        if not len(table[i]) == len(table[0]):
+            return "Each row must have the same number of columns"
+
+    return ""
+
+
+def check_span(span: Sequence[Tuple[int, int]], table: List[List[Any]]):
     """
     Ensure the span is valid.
 
@@ -31,12 +67,10 @@ def check_span(span, table):
         A message that states there was something wrong.
     """
 
-    if not type(span) is list:
-        return "Spans must be a list of lists"
+    if not isinstance(span, (list, tuple)):
+        return "Spans must be a list/tuple of pairs"
 
     for pair in span:
-        if not type(pair) is list:
-            return "Spans must be a list of lists of int"
         if not len(pair) == 2:
             return "Spans must be a [Row, Column] pair of integers"
 

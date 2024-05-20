@@ -1,6 +1,6 @@
-from ..dashutils import get_span
-from ..dashutils import get_span_column_count
-from ..dashutils import get_longest_line_length
+
+from ..dashutils.spans import get_span, get_longest_line_length, get_span_column_count
+
 
 def get_output_column_widths(table, spans):
     """

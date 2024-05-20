@@ -1,7 +1,5 @@
-from ..dashutils import get_span_char_width
-from ..dashutils import get_span_char_height
-from ..dashutils import get_span_row_count
-from ..dashutils import get_span_column_count
+
+from ..dashutils.spans import get_span_char_width, get_span_char_height, get_span_column_count, get_span_row_count
 
 from .cell import Cell
 

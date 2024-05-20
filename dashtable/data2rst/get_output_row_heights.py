@@ -1,5 +1,5 @@
-from ..dashutils import get_span
-from ..dashutils import get_span_row_count
+
+from ..dashutils.spans import get_span, get_span_row_count
 
 
 def get_output_row_heights(table, spans):

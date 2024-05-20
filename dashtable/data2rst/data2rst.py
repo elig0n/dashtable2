@@ -1,10 +1,14 @@
+
+from typing import List, Tuple, Sequence, Optional, Any
+
+import copy
+
 from .get_output_column_widths import get_output_column_widths
 from .get_output_row_heights import get_output_row_heights
 
 from ..dashutils import add_cushions
 from ..dashutils import ensure_table_strings
-from ..dashutils.check_table import check_table
-from ..dashutils.check_span import check_span
+from ..dashutils.checks import check_table, check_span
 
 from .make_cell import make_cell
 from .table_cells_2_spans import table_cells_2_spans
@@ -13,11 +17,14 @@ from .merge_all_cells import merge_all_cells
 from .cell import center_cell_text
 from .cell import v_center_cell_text
 
-import copy
 
-
-def data2rst(table, spans=[[[0, 0]]], use_headers=True,
-             center_cells=False, center_headers=False):
+def data2rst(
+    table: List[List[Any]],
+    spans: Optional[Sequence[Sequence[Tuple[int, int]]]] = None,
+    use_headers: bool = True,
+    center_cells: bool = False,
+    center_headers: bool = False
+):
     """
     Convert a list of lists of str into a reStructuredText Grid Table
 
@@ -82,11 +89,11 @@ def data2rst(table, spans=[[[0, 0]]], use_headers=True,
     if not table_ok == "":
         return "ERROR: " + table_ok
 
-    if not spans == [[[0, 0]]]:
-        for span in spans:
-            span_ok = check_span(span, table)
-            if not span_ok == "":
-                return "ERROR: " + span_ok
+    spans = spans or []
+    for span in spans:
+        span_ok = check_span(span, table)
+        if not span_ok == "":
+            return "ERROR: " + span_ok
 
     table = ensure_table_strings(table)
     table = add_cushions(table)

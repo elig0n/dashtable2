@@ -1,10 +1,8 @@
 from ..dashutils import ensure_table_strings
-from ..dashutils.check_table import check_table
-from ..dashutils.check_span import check_span
+from ..dashutils.checks import check_table, check_span
 from ..dashutils.multis_2_mono import multis_2_mono
 from ..dashutils.center_line import center_line
-from ..dashutils.get_span_column_count import get_span_column_count
-from ..dashutils.get_span import get_span
+from ..dashutils.spans import get_span, get_span_column_count
 
 from .row_includes_spans import row_includes_spans
 
