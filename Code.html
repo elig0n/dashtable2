@@ -1,40 +1,96 @@
 <!DOCTYPE html>
+<html class="writer-html5" lang="en">
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
-<html lang="en">
-  <head>
-    <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Code &mdash; dashtable2  documentation</title>
+      <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=fa44fd50" />
+      <link rel="stylesheet" type="text/css" href="_static/css/theme.css?v=19f00094" />
 
-    <title>Code &#8212; dashtable2  documentation</title>
-    <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=fa44fd50" />
-    <link rel="stylesheet" type="text/css" href="_static/alabaster.css?v=039e1c02" />
-    <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js?v=b3ba4146"></script>
-    <script src="_static/doctools.js?v=888ff710"></script>
-    <script src="_static/sphinx_highlight.js?v=4825356b"></script>
+  
+  <!--[if lt IE 9]>
+    <script src="_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script src="_static/jquery.js?v=5d32c60e"></script>
+        <script src="_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+        <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js?v=b3ba4146"></script>
+        <script src="_static/doctools.js?v=888ff710"></script>
+        <script src="_static/sphinx_highlight.js?v=4825356b"></script>
+    <script src="_static/js/theme.js"></script>
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
-    <link rel="prev" title="Dependencies" href="Dependencies.html" />
-   
-  <link rel="stylesheet" href="_static/custom.css" type="text/css" />
-  
-  
-  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9" />
+    <link rel="prev" title="Dependencies" href="Dependencies.html" /> 
+</head>
 
-  </head><body>
-  
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
 
-    <div class="document">
-      <div class="documentwrapper">
-        <div class="bodywrapper">
           
+          
+          <a href="index.html" class="icon icon-home">
+            dashtable2
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="About.html">About</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Changelog.html">Changelog</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Installation.html">Installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Dependencies.html">Dependencies</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Code</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#dashtable.data2md"><code class="docutils literal notranslate"><span class="pre">data2md()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="#dashtable.data2rst"><code class="docutils literal notranslate"><span class="pre">data2rst()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="#dashtable.data2simplerst"><code class="docutils literal notranslate"><span class="pre">data2simplerst()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="#dashtable.grid2data"><code class="docutils literal notranslate"><span class="pre">grid2data()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="#dashtable.html2data"><code class="docutils literal notranslate"><span class="pre">html2data()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="#dashtable.html2md"><code class="docutils literal notranslate"><span class="pre">html2md()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="#dashtable.html2rst"><code class="docutils literal notranslate"><span class="pre">html2rst()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="#dashtable.simple2data"><code class="docutils literal notranslate"><span class="pre">simple2data()</span></code></a></li>
+</ul>
+</li>
+</ul>
 
-          <div class="body" role="main">
-            
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">dashtable2</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="index.html" class="icon icon-home" aria-label="Home"></a></li>
+      <li class="breadcrumb-item active">Code</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="_sources/Code.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
   <section id="module-dashtable">
-<span id="code"></span><h1>Code<a class="headerlink" href="#module-dashtable" title="Permalink to this heading">¶</a></h1>
+<span id="code"></span><h1>Code<a class="headerlink" href="#module-dashtable" title="Permalink to this heading"></a></h1>
 <dl class="py function">
 <dt class="sig sig-object py" id="dashtable.data2md">
-<span class="sig-prename descclassname"><span class="pre">dashtable.</span></span><span class="sig-name descname"><span class="pre">data2md</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">table</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#dashtable.data2md" title="Permalink to this definition">¶</a></dt>
+<span class="sig-prename descclassname"><span class="pre">dashtable.</span></span><span class="sig-name descname"><span class="pre">data2md</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">table</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#dashtable.data2md" title="Permalink to this definition"></a></dt>
 <dd><p>Creates a markdown table. The first row will be headers.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
@@ -66,7 +122,7 @@ because markdown tables do not support multiline cells.</p>
 
 <dl class="py function">
 <dt class="sig sig-object py" id="dashtable.data2rst">
-<span class="sig-prename descclassname"><span class="pre">dashtable.</span></span><span class="sig-name descname"><span class="pre">data2rst</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">table</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">List</span><span class="p"><span class="pre">[</span></span><span class="pre">List</span><span class="p"><span class="pre">[</span></span><span class="pre">Any</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span></span></em>, <em class="sig-param"><span class="n"><span class="pre">spans</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Sequence</span><span class="p"><span class="pre">[</span></span><span class="pre">Sequence</span><span class="p"><span class="pre">[</span></span><span class="pre">Tuple</span><span class="p"><span class="pre">[</span></span><span class="pre">int</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">int</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">use_headers</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">center_cells</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">center_headers</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#dashtable.data2rst" title="Permalink to this definition">¶</a></dt>
+<span class="sig-prename descclassname"><span class="pre">dashtable.</span></span><span class="sig-name descname"><span class="pre">data2rst</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">table</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">List</span><span class="p"><span class="pre">[</span></span><span class="pre">List</span><span class="p"><span class="pre">[</span></span><span class="pre">Any</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span></span></em>, <em class="sig-param"><span class="n"><span class="pre">spans</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Sequence</span><span class="p"><span class="pre">[</span></span><span class="pre">Sequence</span><span class="p"><span class="pre">[</span></span><span class="pre">Tuple</span><span class="p"><span class="pre">[</span></span><span class="pre">int</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">int</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">use_headers</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">center_cells</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">center_headers</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#dashtable.data2rst" title="Permalink to this definition"></a></dt>
 <dd><p>Convert a list of lists of str into a reStructuredText Grid Table</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
@@ -126,7 +182,7 @@ example:</p>
 
 <dl class="py function">
 <dt class="sig sig-object py" id="dashtable.data2simplerst">
-<span class="sig-prename descclassname"><span class="pre">dashtable.</span></span><span class="sig-name descname"><span class="pre">data2simplerst</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">table</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">spans</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">[[[0,</span> <span class="pre">0]]]</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">use_headers</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">headers_row</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#dashtable.data2simplerst" title="Permalink to this definition">¶</a></dt>
+<span class="sig-prename descclassname"><span class="pre">dashtable.</span></span><span class="sig-name descname"><span class="pre">data2simplerst</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">table</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">spans</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">[[[0,</span> <span class="pre">0]]]</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">use_headers</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">headers_row</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#dashtable.data2simplerst" title="Permalink to this definition"></a></dt>
 <dd><p>Convert table data to a simple rst table</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
@@ -176,7 +232,7 @@ headers do not need to be at the top.</p></li>
 
 <dl class="py function">
 <dt class="sig sig-object py" id="dashtable.grid2data">
-<span class="sig-prename descclassname"><span class="pre">dashtable.</span></span><span class="sig-name descname"><span class="pre">grid2data</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">text</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#dashtable.grid2data" title="Permalink to this definition">¶</a></dt>
+<span class="sig-prename descclassname"><span class="pre">dashtable.</span></span><span class="sig-name descname"><span class="pre">grid2data</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">text</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#dashtable.grid2data" title="Permalink to this definition"></a></dt>
 <dd><p>Convert Grid table to data (the kind used by Dashtable)</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
@@ -227,7 +283,7 @@ combined table cells</p></li>
 
 <dl class="py function">
 <dt class="sig sig-object py" id="dashtable.html2data">
-<span class="sig-prename descclassname"><span class="pre">dashtable.</span></span><span class="sig-name descname"><span class="pre">html2data</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">html_string</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#dashtable.html2data" title="Permalink to this definition">¶</a></dt>
+<span class="sig-prename descclassname"><span class="pre">dashtable.</span></span><span class="sig-name descname"><span class="pre">html2data</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">html_string</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#dashtable.html2data" title="Permalink to this definition"></a></dt>
 <dd><p>Convert an html table to a data table and spans.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
@@ -247,7 +303,7 @@ are merged in a table.</p></li>
 
 <dl class="py function">
 <dt class="sig sig-object py" id="dashtable.html2md">
-<span class="sig-prename descclassname"><span class="pre">dashtable.</span></span><span class="sig-name descname"><span class="pre">html2md</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">html_string</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#dashtable.html2md" title="Permalink to this definition">¶</a></dt>
+<span class="sig-prename descclassname"><span class="pre">dashtable.</span></span><span class="sig-name descname"><span class="pre">html2md</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">html_string</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#dashtable.html2md" title="Permalink to this definition"></a></dt>
 <dd><p>Convert a string or html file to a markdown table string.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
@@ -299,7 +355,7 @@ are merged in a table.</p></li>
 
 <dl class="py function">
 <dt class="sig sig-object py" id="dashtable.html2rst">
-<span class="sig-prename descclassname"><span class="pre">dashtable.</span></span><span class="sig-name descname"><span class="pre">html2rst</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">html_string</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">force_headers</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">center_cells</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">center_headers</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#dashtable.html2rst" title="Permalink to this definition">¶</a></dt>
+<span class="sig-prename descclassname"><span class="pre">dashtable.</span></span><span class="sig-name descname"><span class="pre">html2rst</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">html_string</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">force_headers</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">center_cells</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">center_headers</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#dashtable.html2rst" title="Permalink to this definition"></a></dt>
 <dd><p>Convert a string or html file to an rst table string.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
@@ -366,7 +422,7 @@ headers in the html file.</p></li>
 
 <dl class="py function">
 <dt class="sig sig-object py" id="dashtable.simple2data">
-<span class="sig-prename descclassname"><span class="pre">dashtable.</span></span><span class="sig-name descname"><span class="pre">simple2data</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">text</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#dashtable.simple2data" title="Permalink to this definition">¶</a></dt>
+<span class="sig-prename descclassname"><span class="pre">dashtable.</span></span><span class="sig-name descname"><span class="pre">simple2data</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">text</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#dashtable.simple2data" title="Permalink to this definition"></a></dt>
 <dd><p>Convert a simple table to data (the kind used by DashTable)</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
@@ -422,85 +478,33 @@ colspans.</p></li>
 </section>
 
 
+           </div>
           </div>
-          
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="Dependencies.html" class="btn btn-neutral float-left" title="Dependencies" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2024, pasaopasen.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
         </div>
       </div>
-      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
-        <div class="sphinxsidebarwrapper">
-<h1 class="logo"><a href="index.html">dashtable2</a></h1>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
 
-
-
-
-
-
-
-
-<h3>Navigation</h3>
-<p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
-<ul class="current">
-<li class="toctree-l1"><a class="reference internal" href="About.html">About</a></li>
-<li class="toctree-l1"><a class="reference internal" href="Changelog.html">Changelog</a></li>
-<li class="toctree-l1"><a class="reference internal" href="Installation.html">Installation</a></li>
-<li class="toctree-l1"><a class="reference internal" href="Dependencies.html">Dependencies</a></li>
-<li class="toctree-l1 current"><a class="current reference internal" href="#">Code</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="#dashtable.data2md"><code class="docutils literal notranslate"><span class="pre">data2md()</span></code></a></li>
-<li class="toctree-l2"><a class="reference internal" href="#dashtable.data2rst"><code class="docutils literal notranslate"><span class="pre">data2rst()</span></code></a></li>
-<li class="toctree-l2"><a class="reference internal" href="#dashtable.data2simplerst"><code class="docutils literal notranslate"><span class="pre">data2simplerst()</span></code></a></li>
-<li class="toctree-l2"><a class="reference internal" href="#dashtable.grid2data"><code class="docutils literal notranslate"><span class="pre">grid2data()</span></code></a></li>
-<li class="toctree-l2"><a class="reference internal" href="#dashtable.html2data"><code class="docutils literal notranslate"><span class="pre">html2data()</span></code></a></li>
-<li class="toctree-l2"><a class="reference internal" href="#dashtable.html2md"><code class="docutils literal notranslate"><span class="pre">html2md()</span></code></a></li>
-<li class="toctree-l2"><a class="reference internal" href="#dashtable.html2rst"><code class="docutils literal notranslate"><span class="pre">html2rst()</span></code></a></li>
-<li class="toctree-l2"><a class="reference internal" href="#dashtable.simple2data"><code class="docutils literal notranslate"><span class="pre">simple2data()</span></code></a></li>
-</ul>
-</li>
-</ul>
-
-<div class="relations">
-<h3>Related Topics</h3>
-<ul>
-  <li><a href="index.html">Documentation overview</a><ul>
-      <li>Previous: <a href="Dependencies.html" title="previous chapter">Dependencies</a></li>
-  </ul></li>
-</ul>
-</div>
-<div id="searchbox" style="display: none" role="search">
-  <h3 id="searchlabel">Quick search</h3>
-    <div class="searchformwrapper">
-    <form class="search" action="search.html" method="get">
-      <input type="text" name="q" aria-labelledby="searchlabel" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"/>
-      <input type="submit" value="Go" />
-    </form>
-    </div>
-</div>
-<script>document.getElementById('searchbox').style.display = "block"</script>
-
-
-
-
-
-
-
-
-        </div>
-      </div>
-      <div class="clearer"></div>
-    </div>
-    <div class="footer">
-      &copy;2024, pasaopasen.
-      
-      |
-      Powered by <a href="http://sphinx-doc.org/">Sphinx 7.1.2</a>
-      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.13</a>
-      
-      |
-      <a href="_sources/Code.rst.txt"
-          rel="nofollow">Page source</a>
-    </div>
-
-    
-
-    
-  </body>
+</body>
 </html>
