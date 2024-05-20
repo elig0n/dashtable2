@@ -2,7 +2,7 @@
 -r ./requirements.txt
 
 sphinxcontrib-napoleon
-sphinx_rtd_theme
+sphinx-rtd-theme
 pytest
 ipython
 
