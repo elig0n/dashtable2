@@ -1,7 +1,7 @@
 import os
 import sys
-import unittest
-import ntpath
+
+import pytest
 
 from pathlib import Path
 
@@ -13,38 +13,33 @@ import dashtable
 from dashtable.utils.files import read_text
 
 
-class TestMatches(unittest.TestCase):
-    def setUp(self):
-        self.static_path = os.path.join(PROJECT_PATH, 'tests', 'static')
-
-    def test_html_to_tables(self):
-        for file in os.listdir(self.static_path):
-
-            if file.endswith('.html'):
-                html_path = os.path.join(self.static_path, file)
-                rst = dashtable.html2rst(html_path)
-                md = dashtable.html2md(html_path)
-
-                rst_name = os.path.splitext(file)[0] + '.rst'
-                rst_path = os.path.join(self.static_path, rst_name)
-                rst_text = read_text(rst_path).rstrip()
-
-                try:
-                    self.assertEqual(rst, rst_text)
-                except AssertionError:
-                    print('MATCH ERROR: ' + ntpath.basename(html_path))
+STATIC_PATH = os.path.join(PROJECT_PATH, 'tests', 'static')
 
 
-                md_name = os.path.splitext(file)[0] + '.md'
-                md_path = os.path.join(self.static_path, md_name)
-                md_text = read_text(md_path).rstrip()
-
-                try:
-                    self.assertEqual(md, md_text)
-                except AssertionError:
-                    print('MATCH ERROR: ' + ntpath.basename(html_path))
+files = [
+    str(p) for p in sorted(Path(STATIC_PATH).glob('*.html'), key=lambda p: p.stem) if p.is_file()
+]
+assert files
 
 
-if __name__ == '__main__':
-    unittest.main()
+@pytest.mark.parametrize(
+    ('path',),
+    [(f,) for f in files]
+)
+def test_html_to_tables(path: str):
+
+    html_path = path
+    rst = dashtable.html2rst(html_path)
+    md = dashtable.html2md(html_path)
+
+    rst_path = os.path.splitext(path)[0] + '.rst'
+    rst_text = read_text(rst_path).rstrip()
+
+    assert rst == rst_text
+
+    md_path = os.path.splitext(path)[0] + '.md'
+    md_text = read_text(md_path).rstrip()
+
+    assert md == md_text
+
 
