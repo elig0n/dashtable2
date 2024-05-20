@@ -1,5 +1,6 @@
 https://pasaopasen.github.io/PasaOpasen/dashtable2/
 https://pasaopasen.github.io/PasaOpasen/dashtable2/About.html
+https://pasaopasen.github.io/PasaOpasen/dashtable2/Changelog.html
 https://pasaopasen.github.io/PasaOpasen/dashtable2/Code.html
 https://pasaopasen.github.io/PasaOpasen/dashtable2/Dependencies.html
 https://pasaopasen.github.io/PasaOpasen/dashtable2/Installation.html
