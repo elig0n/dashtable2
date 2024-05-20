@@ -26,7 +26,7 @@ mkdir -p gh-pages/
 cp -r build/html/. gh-pages/
 cd gh-pages
 sitemap
-git add *
+git add .
 if git diff --staged --quiet; then
   echo "$0: No changes to commit."
   exit 0
