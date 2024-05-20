@@ -42,10 +42,12 @@ jobs:
         run: |
           make test
 
-      # - name: Build docs
-      #   run: bash meta/documentation.sh
+      - name: Build docs
+        run: |
+          make -f sphinx.makefile html
 
-      # - name: Deploy docs
-      #   env:
-      #     GH_PASSWORD: ${{ secrets.GITHUB_TOKEN }}
-      #   run: bash .github/deploy-gh-pages.sh
+      - name: Deploy docs
+        env:
+          GH_PASSWORD: ${{ secrets.GITHUB_TOKEN }}
+        run: bash .github/deploy-gh-pages.sh
+
