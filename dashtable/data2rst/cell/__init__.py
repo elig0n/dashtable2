@@ -8,6 +8,5 @@ __all__ = [
 
 from .cell import Cell
 from .center_cell_text import center_cell_text
-from .get_merge_direction import get_merge_direction
-from .merge_cells import merge_cells
+from .merge import merge_cells, get_merge_direction
 from .v_center_cell_text import v_center_cell_text

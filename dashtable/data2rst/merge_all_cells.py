@@ -33,7 +33,7 @@ def merge_all_cells(cells: List):
             cell2 = cells[count]
 
             merge_direction = get_merge_direction(cell1, cell2)
-            if merge_direction == "NONE":
+            if merge_direction is None:
 
                 if checked[current, count]:  # already checked
                     if checked.all():  # if all combinations checked -- raise infinite loop error
