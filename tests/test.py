@@ -26,7 +26,9 @@ assert files
     ('path',),
     [(f,) for f in files]
 )
-def test_html_to_tables(path: str):
+def test_html_to_tables(
+    path: str  # = './static/colspan_input.html'
+):
 
     html_path = path
     rst = dashtable.html2rst(html_path)
