@@ -69,13 +69,15 @@ def get_merge_direction(cell1: Cell, cell2: Cell) -> MERGE_DIRECTION:
         elif left1 == right2 and cell1.left_sections >= cell2.right_sections:
             return "LEFT"
 
-    elif left1 == left2 and right1 == right2:
+        return None
+
+    if left1 == left2 and right1 == right2:
         if top1 == bottom2 and cell1.top_sections >= cell2.bottom_sections:
             return "TOP"
         elif bottom1 == top2 and cell1.bottom_sections >= cell2.top_sections:
             return "BOTTOM"
 
-    return None
+        return None
 
 
 def merge_cells(cell1: Cell, cell2: Cell, direction: MERGE_DIRECTION):
