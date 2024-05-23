@@ -12,6 +12,11 @@ from .cell import get_merge_direction
 from .cell import merge_cells
 
 
+def _get_empty_mask(size: int):
+    return np.zeros((size, size), dtype=bool)
+
+
+# @profile
 def merge_all_cells(cells: List[Cell]) -> str:
     """
     Loop through list of cells and piece them together one by one
@@ -26,35 +31,36 @@ def merge_all_cells(cells: List[Cell]) -> str:
         The final grid table
     """
 
-    checked = np.zeros((len(cells), len(cells)), dtype=bool)
+    checked = _get_empty_mask(len(cells))
 
     current = 0
 
     while len(cells) > 1:
-        count = 0
+        compared = 0
+        c1 = cells[current]
 
-        while count < len(cells):
-            c1 = cells[current]
-            c2 = cells[count]
+        while compared < len(cells):
+            c2 = cells[compared]
 
             merge_direction = get_merge_direction(c1, c2)
-            if merge_direction is None:
+            if merge_direction:
 
-                if checked[current, count]:  # already checked
+                merge_cells(c1, c2, merge_direction)
+
+                if current > compared:
+                    current -= 1
+
+                cells.pop(compared)
+
+                checked = _get_empty_mask(len(cells))
+
+            else:
+                if checked[current, compared]:  # already checked
                     if checked.all():  # if all combinations checked -- raise infinite loop error
                         raise NonMergableException('current cells cannot be merged due to too complicated structure')
 
-                checked[current, count] = True
-                count += 1
-            else:
-                merge_cells(c1, c2, merge_direction)
-
-                if current > count:
-                    current -= 1
-
-                cells.pop(count)
-
-                checked = np.zeros((len(cells), len(cells)), dtype=bool)
+                checked[current, compared] = True
+                compared += 1
 
         current += 1
 
