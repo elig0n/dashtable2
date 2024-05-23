@@ -63,17 +63,17 @@ def get_merge_direction(cell1: Cell, cell2: Cell) -> MERGE_DIRECTION:
     left1, top1, right1, bottom1 = cell1.left_top_right_bottom
     left2, top2, right2, bottom2 = cell2.left_top_right_bottom
 
-    if right1 == left2 and top1 == top2 and bottom1 == bottom2 and cell1.right_sections >= cell2.left_sections:
-        return "RIGHT"
+    if top1 == top2 and bottom1 == bottom2:
+        if right1 == left2 and cell1.right_sections >= cell2.left_sections:
+            return "RIGHT"
+        if left1 == right2 and cell1.left_sections >= cell2.right_sections:
+            return "LEFT"
 
-    elif left1 == left2 and right1 == right2 and top1 == bottom2 and cell1.top_sections >= cell2.bottom_sections:
-        return "TOP"
-
-    elif left1 == left2 and right1 == right2 and bottom1 == top2 and cell1.bottom_sections >= cell2.top_sections:
-        return "BOTTOM"
-
-    elif left1 == right2 and top1 == top2 and bottom1 == bottom2 and cell1.left_sections >= cell2.right_sections:
-        return "LEFT"
+    if left1 == left2 and right1 == right2:
+        if top1 == bottom2 and cell1.top_sections >= cell2.bottom_sections:
+            return "TOP"
+        if bottom1 == top2 and cell1.bottom_sections >= cell2.top_sections:
+            return "BOTTOM"
 
     return None
 
