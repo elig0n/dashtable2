@@ -60,36 +60,19 @@ def get_merge_direction(cell1: Cell, cell2: Cell) -> MERGE_DIRECTION:
     -------
         The side onto which cell2 can be merged
     """
-    cell1_left = cell1.column
-    cell1_right = cell1.column + cell1.column_count
-    cell1_top = cell1.row
-    cell1_bottom = cell1.row + cell1.row_count
+    left1, top1, right1, bottom1 = cell1.left_top_right_bottom
+    left2, top2, right2, bottom2 = cell2.left_top_right_bottom
 
-    cell2_left = cell2.column
-    cell2_right = cell2.column + cell2.column_count
-    cell2_top = cell2.row
-    cell2_bottom = cell2.row + cell2.row_count
-
-    if (cell1_right == cell2_left and cell1_top == cell2_top and
-            cell1_bottom == cell2_bottom and
-            cell1.right_sections >= cell2.left_sections):
+    if right1 == left2 and top1 == top2 and bottom1 == bottom2 and cell1.right_sections >= cell2.left_sections:
         return "RIGHT"
 
-    elif (cell1_left == cell2_left and cell1_right == cell2_right and
-            cell1_top == cell2_bottom and
-            cell1.top_sections >= cell2.bottom_sections):
+    elif left1 == left2 and right1 == right2 and top1 == bottom2 and cell1.top_sections >= cell2.bottom_sections:
         return "TOP"
 
-    elif (cell1_left == cell2_left and
-          cell1_right == cell2_right and
-          cell1_bottom == cell2_top and
-          cell1.bottom_sections >= cell2.top_sections):
+    elif left1 == left2 and right1 == right2 and bottom1 == top2 and cell1.bottom_sections >= cell2.top_sections:
         return "BOTTOM"
 
-    elif (cell1_left == cell2_right and
-          cell1_top == cell2_top and
-          cell1_bottom == cell2_bottom and
-          cell1.left_sections >= cell2.right_sections):
+    elif left1 == right2 and top1 == top2 and bottom1 == bottom2 and cell1.left_sections >= cell2.right_sections:
         return "LEFT"
 
     return None

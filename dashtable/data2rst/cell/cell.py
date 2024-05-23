@@ -1,7 +1,10 @@
+
+from typing import Tuple
+
 from .is_only import is_only
 
 
-class Cell():
+class Cell:
     """
     Holds the text and data for an rst text cell
     """
@@ -143,6 +146,14 @@ class Cell():
             return True
 
         return False
+
+    @property
+    def left_top_right_bottom(self) -> Tuple[int, int, int, int]:
+        left = self.column
+        top = self.row
+        right = left + self.column_count
+        bottom = top + self.row_count
+        return left, top, right, bottom
 
     def __lt__(self, other):
         """For sorting instances of this class."""
