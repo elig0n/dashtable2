@@ -150,6 +150,9 @@ def merge_all_cells(cells: List[Cell]) -> str:
     current = 0
     """outer loop indexer"""
 
+    current_real = 0
+    """real (matrix) index for the `current`"""
+
     while count_cells > 1:
         compared = 0
         """inner loop indexer"""
@@ -158,7 +161,7 @@ def merge_all_cells(cells: List[Cell]) -> str:
 
         while compared < count_cells:
             if checked[
-                checked_available_indexes[current],
+                current_real,
                 checked_available_indexes[compared]
             ]:  # already checked -- skip here to speed up calculations
                 if count_to_check:  # not all items checked
@@ -182,7 +185,7 @@ def merge_all_cells(cells: List[Cell]) -> str:
 
                 #region update caches
 
-                _index = checked_available_indexes[current]
+                _index = current_real
                 """real index in the global array"""
 
                 # assert count_to_check == checked.size - checked.sum()
@@ -269,20 +272,23 @@ def merge_all_cells(cells: List[Cell]) -> str:
                 if current > compared:
                     current -= 1
 
+                current_real = checked_available_indexes[current]
+
                 #endregion
 
             else:  # no merge -- continue watching
 
                 # set flag that this pair is checked
-                checked[checked_available_indexes[current], checked_available_indexes[compared]] = True
+                checked[current_real, checked_available_indexes[compared]] = True
                 count_to_check -= 1
 
                 compared += 1
 
         current += 1
-
         if current >= count_cells:
             current = 0
+
+        current_real = checked_available_indexes[current]
 
     #endregion
 
