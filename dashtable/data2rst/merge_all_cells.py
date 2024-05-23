@@ -6,7 +6,7 @@ import numpy as np
 from .cell import get_merge_direction
 from .cell import merge_cells
 
-
+#@profile
 def merge_all_cells(cells: List):
     """
     Loop through list of cells and piece them together one by one
@@ -29,10 +29,10 @@ def merge_all_cells(cells: List):
         count = 0
 
         while count < len(cells):
-            cell1 = cells[current]
-            cell2 = cells[count]
+            c1 = cells[current]
+            c2 = cells[count]
 
-            merge_direction = get_merge_direction(cell1, cell2)
+            merge_direction = get_merge_direction(c1, c2)
             if merge_direction is None:
 
                 if checked[current, count]:  # already checked
@@ -43,7 +43,7 @@ def merge_all_cells(cells: List):
                 checked[current, count] = True
                 count += 1
             else:
-                merge_cells(cell1, cell2, merge_direction)
+                merge_cells(c1, c2, merge_direction)
 
                 if current > count:
                     current -= 1
