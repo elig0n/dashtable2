@@ -16,8 +16,7 @@ def _get_empty_mask(size: int):
     return np.zeros((size, size), dtype=bool)
 
 
-# @profile
-def merge_all_cells(cells: List[Cell]) -> str:
+def merge_all_cells_v1(cells: List[Cell]) -> str:
     """
     Loop through list of cells and piece them together one by one
 
@@ -66,6 +65,226 @@ def merge_all_cells(cells: List[Cell]) -> str:
 
         if current >= len(cells):
             current = 0
+
+    return cells[0].text
+
+
+# @profile
+def merge_all_cells(cells: List[Cell]) -> str:
+    """
+    Loop through list of cells and piece them together one by one
+
+    Parameters
+    ----------
+    cells : list of dashtable.data2rst.Cell
+
+    Returns
+    -------
+    grid_table : str
+        The final grid table
+
+    Notes
+    -------
+        this is the highly optimized version of `merge_all_cells_v1` which tries to minimize repeated calculations;
+    """
+
+    if len(cells) == 1:
+        return cells[0].text
+
+    #region PREPROCESSING
+
+    init_cells = count_cells = len(cells)
+
+    checked = _get_empty_mask(count_cells)
+    """mask for caching that the cells pair must be checked or not"""
+
+    checked_available_mask = np.ones(count_cells, dtype=bool)
+    """
+    mask of the still available indexes (of rows/cols)
+    
+    it's more performant to use this new indexing layer instead of frequent rows/cols deletions with full copying
+    """
+
+    checked_available_indexes = np.where(checked_available_mask)[0]
+    """
+    available indexes (mask derivative)
+    
+    used for translating current indexes to real
+    """
+
+    count_to_check = checked.size
+    """
+    count of pairs that still are not checked
+    
+    always equal to 
+        checked.size - checked.sum()
+    but much more performant than computing this value any time
+    """
+
+    #
+    #
+    # disable 90%+ of pairs which are definitely not neighbours
+    #
+    #
+    ltrb = np.array([c.left_top_right_bottom for c in cells])
+    """array of (left, top, right, bottom) values for each cell"""
+    for i, (l, t, r, b) in enumerate(ltrb):
+        candidates_mask = (
+            ((ltrb[:, 0] == l) & (ltrb[:, 2] == r)) | ((ltrb[:, 1] == t) & (ltrb[:, 3] == b))
+        )
+        """
+        mask of cells which may be the neighbours because of simplest criteria part
+        
+        other cells definitely cannot be neighbours and therefore must be excepted for speed up
+        """
+        neg = ~candidates_mask
+        checked[i, neg] = True
+        checked[neg, i] = True
+
+    count_to_check -= checked.sum()  # decrease checking-required count
+
+    #endregion
+
+    #region MAIN LOOP
+
+    current = 0
+    """outer loop indexer"""
+
+    while count_cells > 1:
+        compared = 0
+        """inner loop indexer"""
+
+        c1 = cells[current]
+
+        while compared < count_cells:
+            if checked[
+                checked_available_indexes[current],
+                checked_available_indexes[compared]
+            ]:  # already checked -- skip here to speed up calculations
+                if count_to_check:  # not all items checked
+                    compared += 1  # increase indexer
+                    continue
+                #
+                # otherwise: all combinations checked -- raise infinite loop error
+                #
+                raise NonMergableException('current cells cannot be merged due to too complicated structure')
+
+            c2 = cells[compared]
+
+            #
+            # get merge direction of c1 according to c2
+            #   note that this function is not symmetric and must be performed for (c1, c2) as well as (c2, c1)
+            #
+            merge_direction = get_merge_direction(c1, c2)
+            if merge_direction:  # if must be merged
+
+                merge_cells(c1, c2, merge_direction)  # perform merge
+
+                #region update caches
+
+                _index = checked_available_indexes[current]
+                """real index in the global array"""
+
+                # assert count_to_check == checked.size - checked.sum()
+
+                ############################
+                #
+                # next code resets the checking caches of all pairs with c1
+                #   because c1 is changed
+                #
+                # here count_to_check must be increased by slice.sum()
+                #   because slice.sum() == count of checked from slice
+                #       and all this checked must be forgotten
+                #
+                ############################
+
+                count_to_check += checked[checked_available_indexes, _index].sum()
+                checked[checked_available_indexes, _index] = False
+
+                # assert count_to_check == checked.size - checked.sum()
+
+                count_to_check += checked[_index, checked_available_indexes].sum()
+                checked[_index, checked_available_indexes] = False
+
+                # assert count_to_check == checked.size - checked.sum()
+
+                #############################
+                #
+                # for fully False slices perform checked filling according to the simplest criteria
+                #   to speed up
+                #
+                # here count_to_check must be decreased by new checks counts
+                #
+                #############################
+                (l, t, r, b) = c1.left_top_right_bottom
+                ltrb[_index] = (l, t, r, b)
+
+                candidates_mask = (
+                    ((ltrb[:, 0] == l) & (ltrb[:, 2] == r)) | ((ltrb[:, 1] == t) & (ltrb[:, 3] == b))
+                )
+                neg = np.where(~candidates_mask)[0]
+
+                count_to_check -= neg.size - checked[_index, neg].sum()
+                checked[_index, neg] = True
+                count_to_check -= neg.size - checked[neg, _index].sum()
+                checked[neg, _index] = True
+
+                ####################
+                #
+                #
+                # remove second cell info from all data
+                #
+                #
+                ####################
+
+                cells.pop(compared)
+                count_cells -= 1
+
+                _index = checked_available_indexes[compared]
+
+                #
+                # force set all this cell pairs to checked
+                #   and decrease count_to_check by count of not already checked pairs
+                #
+
+                count_to_check -= init_cells - checked[_index, :].sum()
+                checked[_index, :] = True
+                # assert count_to_check == checked.size - checked.sum()
+
+                count_to_check -= init_cells - checked[:, _index].sum()
+                checked[:, _index] = True
+                # assert count_to_check == checked.size - checked.sum()
+
+                #
+                # update indexes caches
+                #
+                checked_available_mask[_index] = False
+                checked_available_indexes = np.where(checked_available_mask)[0]
+
+                # count_to_check = checked.size - checked.sum()
+
+                #
+                # shift current in this case
+                #
+                if current > compared:
+                    current -= 1
+
+                #endregion
+
+            else:  # no merge -- continue watching
+
+                # set flag that this pair is checked
+                checked[checked_available_indexes[current], checked_available_indexes[compared]] = True
+                count_to_check -= 1
+
+                compared += 1
+
+        current += 1
+
+        if current >= count_cells:
+            current = 0
+
+    #endregion
 
     return cells[0].text
 
