@@ -26,10 +26,10 @@ def table_cells_2_spans(table, spans):
             span = get_span(spans, row, column)
 
             if not span:
-                new_spans.append([[row, column]])
+                new_spans.append([(row, column)])
 
     new_spans.extend(spans)
-    new_spans = list(sorted(new_spans))
+    new_spans = sorted(new_spans)
 
     return new_spans
 

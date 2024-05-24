@@ -3,6 +3,7 @@ Changelog
 
 * 1.4.9
     - `merge_all_cells` function (`data2rst` part) substantial speed up 
+    - fixes on spans format
 
 * 1.4.8
     - same fix as **1.4.7** but for LEFT and RIGHT

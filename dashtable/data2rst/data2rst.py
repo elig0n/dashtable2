@@ -90,6 +90,10 @@ def data2rst(
         return "ERROR: " + table_ok
 
     spans = spans or []
+    spans: List[List[Tuple[int, int]]] = [
+        list(map(tuple, pairs))
+        for pairs in spans
+    ]
     for span in spans:
         span_ok = check_span(span, table)
         if not span_ok == "":

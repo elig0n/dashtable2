@@ -1,4 +1,4 @@
-def get_span(spans, row, column):
+def get_span(spans, row: int, column: int):
     """
     Gets the span containing the [row, column] pair
 
@@ -7,15 +7,18 @@ def get_span(spans, row, column):
     spans : list of lists of lists
         A list containing spans, which are lists of [row, column] pairs
         that define where a span is inside a table.
+    row :
+    column :
 
     Returns
     -------
     span : list of lists
         A span containing the [row, column] pair
     """
-    for i in range(len(spans)):
-        if [row, column] in spans[i]:
-            return spans[i]
+    p = (row, column)
+    for sps in spans:
+        if p in sps:
+            return sps
 
     return None
 
