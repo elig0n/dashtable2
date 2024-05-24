@@ -1,3 +1,6 @@
+
+from typing import List, Tuple, Optional
+
 from ..dashutils import ensure_table_strings
 from ..dashutils.checks import check_table, check_span
 from ..dashutils.multis_2_mono import multis_2_mono
@@ -9,7 +12,12 @@ from .row_includes_spans import row_includes_spans
 import copy
 
 
-def data2simplerst(table, spans=[[[0, 0]]], use_headers=True, headers_row=0):
+def data2simplerst(
+    table: List[List[str]],
+    spans: Optional[List[List[Tuple[int, int]]]] = None,
+    use_headers: bool = True,
+    headers_row: int = 0
+):
     """
     Convert table data to a simple rst table
 
@@ -64,11 +72,16 @@ def data2simplerst(table, spans=[[[0, 0]]], use_headers=True, headers_row=0):
     if not table_ok == "":
         return "ERROR: " + table_ok
 
-    if not spans == [[[0, 0]]]:
-        for span in spans:
-            span_ok = check_span(span, table)
-            if not span_ok == "":
-                return "ERROR: " + span_ok
+    spans = spans or []
+    spans: List[List[Tuple[int, int]]] = [
+        list(map(tuple, pairs))
+        for pairs in spans
+    ]
+
+    for span in spans:
+        span_ok = check_span(span, table)
+        if not span_ok == "":
+            return "ERROR: " + span_ok
 
     table = ensure_table_strings(table)
     table = multis_2_mono(table)
@@ -96,8 +109,9 @@ def data2simplerst(table, spans=[[[0, 0]]], use_headers=True, headers_row=0):
         while column < len(table[row]):
             span = get_span(spans, row, column)
 
-            if (span and span[0] == [row, column] and
-                    not table[row][column] == ''):
+            if (
+                span and span[0] == (row, column) and table[row][column]
+            ):
                 span_col_count = get_span_column_count(span)
 
                 end_col = column + span_col_count
@@ -126,8 +140,9 @@ def data2simplerst(table, spans=[[[0, 0]]], use_headers=True, headers_row=0):
                 column = 0
                 while column < len(table[row]):
                     span = get_span(spans, row, column)
-                    if (span and span[0] == [row, column] and
-                            not table[row][column] == ''):
+                    if (
+                        span and span[0] == (row, column) and table[row][column]
+                    ):
                         span_col_count = get_span_column_count(span)
 
                         end_column = column + span_col_count

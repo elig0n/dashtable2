@@ -56,7 +56,7 @@ def extract_spans(html_string):
             for r_index in range(tr, tr + r_span_count):
                 for c_index in range(current_column, column):
                     if not get_span(spans, r_index, c_index):
-                        new_span.append([r_index, c_index])
+                        new_span.append((r_index, c_index))
 
             if len(new_span) > 0:
                 spans.append(new_span)

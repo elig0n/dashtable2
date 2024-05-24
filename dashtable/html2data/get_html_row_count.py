@@ -4,7 +4,7 @@ from ..dashutils import get_span_row_count
 def get_html_row_count(spans):
     """Get the number of rows"""
 
-    if spans == []:
+    if not spans:
         return 0
     row_counts = {}
     for span in spans:

@@ -1,6 +1,9 @@
 Changelog
 =====
 
+* 1.4.10
+    - spans fixes
+
 * 1.4.9
     - `merge_all_cells` function (`data2rst` part) substantial speed up 
     - fixes on spans format

@@ -15,6 +15,6 @@ def row_includes_spans(table, row, spans):
     """
     for column in range(len(table[row])):
         for span in spans:
-            if [row, column] in span:
+            if (row, column) in span:
                 return True
     return False
