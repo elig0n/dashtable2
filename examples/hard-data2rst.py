@@ -9,15 +9,36 @@ from dashtable.exceptions import NonMergableException
 from dashtable.data2rst import data2rst
 
 
+def hide_table_text(table, prefix: str = 'txt '):
+    k = 0
+    for row in table:
+        for i, t in enumerate(row):
+            if t:
+                lines = t.split('\n')
+                for j, v in enumerate(lines):
+                    if v:
+                        lines[j] = f"{prefix}{k}"
+                        k += 1
+                row[i] = '\n'.join(lines)
+    return table
+
+
 def main():
 
     folder = (
         # '../tests/in-out/many-spans'
-        'tmp'
+        # 'tmp'
+        'data'
     )
 
-    table = read_json(os.path.join(folder, 'table.json'))
-    spans = read_json(os.path.join(folder, 'spans.json'))
+    table = read_json(os.path.join(folder, 'big.table.json'))
+    spans = read_json(os.path.join(folder, 'big.spans.json'))
+
+    # import json
+    # write_text(
+    #     os.path.join(folder, 'table-fake.json'),
+    #     json.dumps(hide_table_text(table), indent=1)
+    # )
 
     while True:
         try:
