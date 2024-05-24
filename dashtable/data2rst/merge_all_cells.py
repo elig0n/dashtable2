@@ -165,7 +165,17 @@ def merge_all_cells(cells: List[Cell]) -> str:
                 checked_available_indexes[compared]
             ]:  # already checked -- skip here to speed up calculations
                 if count_to_check:  # not all items checked
-                    compared += 1  # increase indexer
+
+                    #
+                    # fast way to get next not checked pair using numpy
+                    #   without intensive python loops
+                    #
+                    _nexts = np.where(~checked[current_real, checked_available_indexes[compared + 1:]])[0]
+                    if not _nexts.size:  # stop loop in no next
+                        break
+                    shift = 1 + _nexts[0]
+
+                    compared += shift  # increase indexer
                     continue
                 #
                 # otherwise: all combinations checked -- raise infinite loop error
@@ -282,7 +292,11 @@ def merge_all_cells(cells: List[Cell]) -> str:
                 checked[current_real, checked_available_indexes[compared]] = True
                 count_to_check -= 1
 
-                compared += 1
+                _nexts = np.where(~checked[current_real, checked_available_indexes[compared + 1:]])[0]
+                if not _nexts.size:
+                    break
+                shift = 1 + _nexts[0]
+                compared += shift
 
         current += 1
         if current >= count_cells:
