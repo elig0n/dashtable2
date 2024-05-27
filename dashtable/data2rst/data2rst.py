@@ -3,8 +3,9 @@ from typing import List, Tuple, Sequence, Optional, Any
 
 import copy
 
-from .get_output_column_widths import get_output_column_widths
-from .get_output_row_heights import get_output_row_heights
+from aliases import CHECKED_MASK_CREATOR, CANDIDATES_MASK_CREATOR, DATA_TABLE, DATA_SPANS
+
+from .get_output_column_sizes import get_output_column_widths, get_output_row_heights
 
 from ..dashutils import add_cushions
 from ..dashutils import ensure_table_strings
@@ -12,16 +13,16 @@ from ..dashutils.checks import check_table, check_span
 
 from .make_cell import make_cell
 from .table_cells_2_spans import table_cells_2_spans
-from .merge_all_cells import merge_all_cells, \
-    CHECKED_MASK_CREATOR, CANDIDATES_MASK_CREATOR, get_candidates_mask_v2, get_checked_mask_v2
+from .merge_all_cells import merge_all_cells, get_candidates_mask_v2, get_checked_mask_v2
 
 from .cell import center_cell_text
 from .cell import v_center_cell_text
 
 
+# @profile
 def data2rst(
-    table: List[List[Any]],
-    spans: Optional[Sequence[Sequence[Tuple[int, int]]]] = None,
+    table: DATA_TABLE,
+    spans: Optional[DATA_SPANS] = None,
     use_headers: bool = True,
     center_cells: bool = False,
     center_headers: bool = False,
