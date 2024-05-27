@@ -2,8 +2,11 @@ Changelog
 =====
 
 * 1.4.11
-    - `data2rst`: fix case when sometimes successful result recognizes as infinite loop
-    - `data2rst`: add arguments `candidates_mask_creator` and `checked_mask_creator` with an ability to select and even implement custom versions to speed up `data2rst` merge step
+    * `data2rst`
+        - fix case when sometimes successful result recognizes as infinite loop
+        - add arguments `candidates_mask_creator` and `checked_mask_creator` with an ability to select and even implement custom versions to speed up `data2rst` merge step
+        - create `DATA_TABLE`, `DATA_SPANS` aliases and use them in many places
+        - some functions refactor
 
 * 1.4.10
     - spans fixes
