@@ -1,6 +1,9 @@
 Changelog
 =====
 
+* 1.4.11
+    - `data2rst`: fix case when sometimes successful result recognizes as infinite loop
+
 * 1.4.10
     - spans fixes
 

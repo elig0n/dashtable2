@@ -29,6 +29,22 @@ def _get_candidates_mask(ltrb: Tuple[int, int, int, int], boxes: array2D) -> arr
     return candidates_mask
 
 
+# def _get_candidates_mask(ltrb: Tuple[int, int, int, int], boxes: array2D) -> array1Dmask:
+#     l, t, r, b = ltrb
+#     candidates_mask = (
+#         (
+#             (boxes[:, 0] == l) & (boxes[:, 2] == r) & (
+#                 (boxes[:, 1] == b) | (boxes[:, 3] == t)
+#             )
+#         ) | (
+#             (boxes[:, 1] == t) & (boxes[:, 3] == b) & (
+#                 (boxes[:, 0] == r) | (boxes[:, 2] == l)
+#             )
+#         )
+#     )
+#     return candidates_mask
+
+
 def merge_all_cells_v1(cells: List[Cell]) -> str:
     """
     Loop through list of cells and piece them together one by one
@@ -189,9 +205,15 @@ def merge_all_cells(cells: List[Cell]) -> str:
                     compared += shift  # increase indexer
                     continue
                 #
-                # otherwise: all combinations checked -- raise infinite loop error
+                # seems like all items checked
                 #
-                raise NonMergableException('current cells cannot be merged due to too complicated structure')
+                if len(cells) == 1:
+                    return cells[0].text
+                else:
+                    #
+                    # otherwise: all combinations checked -- raise infinite loop error
+                    #
+                    raise NonMergableException('current cells cannot be merged due to too complicated structure')
 
             c2 = cells[compared]
 
