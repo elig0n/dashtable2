@@ -5,6 +5,7 @@ from collections import defaultdict
 
 import numpy as np
 
+from ..utils.aliases import array2D, array1Dmask
 from ..exceptions import NonMergableException
 
 from .cell import Cell
@@ -14,6 +15,18 @@ from .cell import merge_cells
 
 def _get_empty_mask(size: int):
     return np.zeros((size, size), dtype=bool)
+
+
+def _get_candidates_mask(ltrb: Tuple[int, int, int, int], boxes: array2D) -> array1Dmask:
+    l, t, r, b = ltrb
+    candidates_mask = (
+        (
+            (boxes[:, 0] == l) & (boxes[:, 2] == r)
+        ) | (
+            (boxes[:, 1] == t) & (boxes[:, 3] == b)
+        )
+    )
+    return candidates_mask
 
 
 def merge_all_cells_v1(cells: List[Cell]) -> str:
@@ -126,12 +139,10 @@ def merge_all_cells(cells: List[Cell]) -> str:
     # disable 90%+ of pairs which are definitely not neighbours
     #
     #
-    ltrb = np.array([c.left_top_right_bottom for c in cells])
+    ltrb_array: array2D = np.array([c.left_top_right_bottom for c in cells])
     """array of (left, top, right, bottom) values for each cell"""
-    for i, (l, t, r, b) in enumerate(ltrb):
-        candidates_mask = (
-            ((ltrb[:, 0] == l) & (ltrb[:, 2] == r)) | ((ltrb[:, 1] == t) & (ltrb[:, 3] == b))
-        )
+    for i, ltrb in enumerate(ltrb_array):
+        candidates_mask = _get_candidates_mask(ltrb, ltrb_array)
         """
         mask of cells which may be the neighbours because of simplest criteria part
         
@@ -229,12 +240,10 @@ def merge_all_cells(cells: List[Cell]) -> str:
                 # here count_to_check must be decreased by new checks counts
                 #
                 #############################
-                (l, t, r, b) = c1.left_top_right_bottom
-                ltrb[_index] = (l, t, r, b)
+                ltrb = c1.left_top_right_bottom
+                ltrb_array[_index] = ltrb
 
-                candidates_mask = (
-                    ((ltrb[:, 0] == l) & (ltrb[:, 2] == r)) | ((ltrb[:, 1] == t) & (ltrb[:, 3] == b))
-                )
+                candidates_mask = _get_candidates_mask(ltrb, ltrb_array)
                 neg = np.where(~candidates_mask)[0]
 
                 count_to_check -= neg.size - checked[_index, neg].sum()
