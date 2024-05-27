@@ -11,3 +11,7 @@ pytest:
 
 
 test: doctest pytest
+
+
+amend:
+	git commit --amend
