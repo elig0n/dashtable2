@@ -7,6 +7,8 @@ __all__ = [
     "data2simplerst",
     "grid2data",
     "simple2data",
+    "dashutils",
+    "utils"
 ]
 
 from .data2md import data2md
