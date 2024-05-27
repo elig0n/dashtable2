@@ -89,7 +89,7 @@ def get_longest_line_length(text: str):
     return length
 
 
-def get_span_char_height(span, row_heights):
+def get_span_char_height(span: DATA_SPAN, row_heights):
     """
     Get the height of a span in the number of newlines it fills.
 
@@ -116,7 +116,7 @@ def get_span_char_height(span, row_heights):
     return total_height
 
 
-def get_span_char_width(span, column_widths):
+def get_span_char_width(span: DATA_SPAN, column_widths):
     """
     Sum the widths of the columns that make up the span, plus the extra.
 
@@ -145,7 +145,7 @@ def get_span_char_width(span, column_widths):
     return total_width
 
 
-def get_span_column_count(span):
+def get_span_column_count(span: DATA_SPAN):
     """
     Find the length of a colspan.
 
@@ -175,18 +175,12 @@ def get_span_column_count(span):
         >>> print(get_span_column_count(span))
         2
     """
-    columns = 1
-    first_column = span[0][1]
-
-    for i in range(len(span)):
-        if span[i][1] > first_column:
-            columns += 1
-            first_column = span[i][1]
-
-    return columns
+    return len(
+        {c for _, c in span}
+    )
 
 
-def get_span_row_count(span):
+def get_span_row_count(span: DATA_SPAN):
     """
     Gets the number of rows included in a span
 
@@ -218,12 +212,6 @@ def get_span_row_count(span):
         >>> print(get_span_row_count(span))
         3
     """
-    rows = 1
-    first_row = span[0][0]
-
-    for i in range(len(span)):
-        if span[i][0] > first_row:
-            rows += 1
-            first_row = span[i][0]
-
-    return rows
+    return len(
+        {r for r, _ in span}
+    )
