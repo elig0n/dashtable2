@@ -1,9 +1,10 @@
 
+import numpy as np
+
 from .aliases import DATA_TABLE
 
 from ..dashutils.aliases import DATA_SPANS
-from ..dashutils.spans import get_longest_line_length, get_span_column_count, get_span_row_count, get_span, \
-    get_span_index, convert_spans_to_array
+from ..dashutils.spans import get_longest_line_length, get_span_column_count, get_span_row_count
 
 
 # @profile
@@ -23,16 +24,23 @@ def get_output_column_widths(table: DATA_TABLE, spans: DATA_SPANS):
     widths : list of int
         The widths of each column in the output table
     """
-    widths = []
-    for column in table[0]:
-        widths.append(3)
 
-    spans_arr = convert_spans_to_array(spans)
+    total_rows = len(table)
+    total_cols = len(table[0])
 
-    for row in range(len(table)):
-        for column in range(len(table[row])):
-            span = spans[get_span_index(spans_arr, row, column)]
-            column_count = get_span_column_count(span)
+    widths = [3 for _ in range(total_cols)]
+
+    spans_column_counts = np.array([get_span_column_count(s) for s in spans])
+    table_index_to_span_index = np.empty((1 + total_rows, 1 + total_cols), dtype=np.uint32)
+    for i, sps in enumerate(spans):
+        for r, c in sps:
+            table_index_to_span_index[r, c] = i
+
+    for row in range(total_rows):
+        for column in range(total_cols):
+            i = table_index_to_span_index[row, column]
+            span = spans[i]
+            column_count = spans_column_counts[i]
 
             if column_count == 1:
                 text_row = span[0][0]
@@ -44,10 +52,11 @@ def get_output_column_widths(table: DATA_TABLE, spans: DATA_SPANS):
                 if length > widths[column]:
                     widths[column] = length
 
-    for row in range(len(table)):
-        for column in range(len(table[row])):
-            span = spans[get_span_index(spans_arr, row, column)]
-            column_count = get_span_column_count(span)
+    for row in range(total_rows):
+        for column in range(total_cols):
+            i = table_index_to_span_index[row, column]
+            span = spans[i]
+            column_count = spans_column_counts[i]
 
             if column_count > 1:
                 text_row = span[0][0]
@@ -90,25 +99,34 @@ def get_output_row_heights(table: DATA_TABLE, spans: DATA_SPANS):
     heights : list of int
         The heights of each row in the output table
     """
-    heights = []
-    for row in table:
-        heights.append(-1)
+    total_rows = len(table)
+    total_cols = len(table[0])
 
-    spans_arr = convert_spans_to_array(spans)
+    heights = [-1 for _ in range(total_rows)]
 
-    for row in range(len(table)):
-        for column in range(len(table[row])):
+    spans_row_counts = np.array([get_span_row_count(s) for s in spans])
+    table_index_to_span_index = np.empty((1 + total_rows, 1 + total_cols), dtype=np.uint32)
+    for i, sps in enumerate(spans):
+        for r, c in sps:
+            table_index_to_span_index[r, c] = i
+
+    for row in range(total_rows):
+        for column in range(total_cols):
+            i = table_index_to_span_index[row, column]
+            # span = spans[i]
+            row_count = spans_row_counts[i]
+
             text = table[row][column]
-            span = spans[get_span_index(spans_arr, row, column)]
-            row_count = get_span_row_count(span)
             height = len(text.split('\n'))
             if row_count == 1 and height > heights[row]:
                 heights[row] = height
 
-    for row in range(len(table)):
-        for column in range(len(table[row])):
-            span = spans[get_span_index(spans_arr, row, column)]
-            row_count = get_span_row_count(span)
+    for row in range(total_rows):
+        for column in range(total_cols):
+            i = table_index_to_span_index[row, column]
+            span = spans[i]
+            row_count = spans_row_counts[i]
+
             if row_count > 1:
                 text_row = span[0][0]
                 text_column = span[0][1]
