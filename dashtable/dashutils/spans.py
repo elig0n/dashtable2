@@ -1,4 +1,10 @@
-def get_span(spans, row: int, column: int):
+
+from typing import Optional
+
+from .aliases import DATA_SPANS, DATA_SPAN
+
+
+def get_span(spans: DATA_SPANS, row: int, column: int) -> Optional[DATA_SPAN]:
     """
     Gets the span containing the [row, column] pair
 
@@ -23,7 +29,7 @@ def get_span(spans, row: int, column: int):
     return None
 
 
-def get_longest_line_length(text):
+def get_longest_line_length(text: str):
     """Get the length longest line in a paragraph"""
     lines = text.split("\n")
     length = 0

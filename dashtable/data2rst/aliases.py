@@ -1,5 +1,5 @@
 
-from typing import List, Dict, Tuple, Callable, Any, Sequence
+from typing import List, Callable, Any
 from typing_extensions import TypeAlias
 
 from ..utils.aliases import array2D, array1Dmask, array2Dmask
@@ -10,11 +10,6 @@ from .cell import LTRB
 DATA_TABLE: TypeAlias = List[List[Any]]
 """list of lists of str"""
 
-DATA_SPAN: TypeAlias = Sequence[Tuple[int, int]]
-"""(row, column) pairs for each span cells"""
-
-DATA_SPANS: TypeAlias = Sequence[DATA_SPAN]
-"""spans sequence"""
 
 CANDIDATES_MASK_CREATOR: TypeAlias = Callable[[array2D, LTRB], array1Dmask]
 """

@@ -1,9 +1,11 @@
 
-from .aliases import DATA_TABLE, DATA_SPANS
+from .aliases import DATA_TABLE
 
+from ..dashutils.aliases import DATA_SPANS
 from ..dashutils.spans import get_longest_line_length, get_span_column_count, get_span_row_count, get_span
 
 
+# @profile
 def get_output_column_widths(table: DATA_TABLE, spans: DATA_SPANS):
     """
     Gets the widths of the columns of the output table
