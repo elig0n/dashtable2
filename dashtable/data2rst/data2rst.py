@@ -12,7 +12,8 @@ from ..dashutils.checks import check_table, check_span
 
 from .make_cell import make_cell
 from .table_cells_2_spans import table_cells_2_spans
-from .merge_all_cells import merge_all_cells
+from .merge_all_cells import merge_all_cells, \
+    CHECKED_MASK_CREATOR, CANDIDATES_MASK_CREATOR, get_candidates_mask_v2, get_checked_mask_v2
 
 from .cell import center_cell_text
 from .cell import v_center_cell_text
@@ -23,7 +24,10 @@ def data2rst(
     spans: Optional[Sequence[Sequence[Tuple[int, int]]]] = None,
     use_headers: bool = True,
     center_cells: bool = False,
-    center_headers: bool = False
+    center_headers: bool = False,
+
+    candidates_mask_creator: CANDIDATES_MASK_CREATOR = get_candidates_mask_v2,
+    checked_mask_creator: CHECKED_MASK_CREATOR = get_checked_mask_v2
 ):
     """
     Convert a list of lists of str into a reStructuredText Grid Table
@@ -48,6 +52,9 @@ def data2rst(
         Whether or not cells will be centered
     center_headers: bool, optional
         Whether or not headers will be centered
+
+    candidates_mask_creator: implementation of `CANDIDATES_MASK_CREATOR` (optimization purposes)
+    checked_mask_creator: implementation of `CHECKED_MASK_CREATOR` (optimization purposes)
 
     Returns
     -------
@@ -126,7 +133,11 @@ def data2rst(
                 center_cell_text(cell)
                 v_center_cell_text(cell)
 
-    grid_table = merge_all_cells(cells)
+    grid_table = merge_all_cells(
+        cells,
+        candidates_mask_creator=candidates_mask_creator,
+        checked_mask_creator=checked_mask_creator
+    )
 
     return grid_table
 
