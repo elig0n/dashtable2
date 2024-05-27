@@ -2,7 +2,8 @@
 from .aliases import DATA_TABLE
 
 from ..dashutils.aliases import DATA_SPANS
-from ..dashutils.spans import get_longest_line_length, get_span_column_count, get_span_row_count, get_span
+from ..dashutils.spans import get_longest_line_length, get_span_column_count, get_span_row_count, get_span, \
+    get_span_index, convert_spans_to_array
 
 
 # @profile
@@ -26,9 +27,11 @@ def get_output_column_widths(table: DATA_TABLE, spans: DATA_SPANS):
     for column in table[0]:
         widths.append(3)
 
+    spans_arr = convert_spans_to_array(spans)
+
     for row in range(len(table)):
         for column in range(len(table[row])):
-            span = get_span(spans, row, column)
+            span = spans[get_span_index(spans_arr, row, column)]
             column_count = get_span_column_count(span)
 
             if column_count == 1:
@@ -43,7 +46,7 @@ def get_output_column_widths(table: DATA_TABLE, spans: DATA_SPANS):
 
     for row in range(len(table)):
         for column in range(len(table[row])):
-            span = get_span(spans, row, column)
+            span = spans[get_span_index(spans_arr, row, column)]
             column_count = get_span_column_count(span)
 
             if column_count > 1:
@@ -91,10 +94,12 @@ def get_output_row_heights(table: DATA_TABLE, spans: DATA_SPANS):
     for row in table:
         heights.append(-1)
 
+    spans_arr = convert_spans_to_array(spans)
+
     for row in range(len(table)):
         for column in range(len(table[row])):
             text = table[row][column]
-            span = get_span(spans, row, column)
+            span = spans[get_span_index(spans_arr, row, column)]
             row_count = get_span_row_count(span)
             height = len(text.split('\n'))
             if row_count == 1 and height > heights[row]:
@@ -102,7 +107,7 @@ def get_output_row_heights(table: DATA_TABLE, spans: DATA_SPANS):
 
     for row in range(len(table)):
         for column in range(len(table[row])):
-            span = get_span(spans, row, column)
+            span = spans[get_span_index(spans_arr, row, column)]
             row_count = get_span_row_count(span)
             if row_count > 1:
                 text_row = span[0][0]

@@ -1,7 +1,27 @@
 
 from typing import Optional
 
-from .aliases import DATA_SPANS, DATA_SPAN
+import numpy as np
+
+from .aliases import DATA_SPANS, DATA_SPAN, SPANS_ARRAY
+
+
+def convert_spans_to_array(spans: DATA_SPANS) -> SPANS_ARRAY:
+    """
+    >>> convert_spans_to_array([[(1, 2), (5, 6)], [(7, 8)], [(9, 9), (8, 8)]])
+    array([[0, 1, 2],
+           [0, 5, 6],
+           [1, 7, 8],
+           [2, 9, 9],
+           [2, 8, 8]])
+    """
+    return np.array(
+        [
+            (i, r, c)
+            for i, sps in enumerate(spans)
+            for r, c in sps
+        ]
+    )
 
 
 def get_span(spans: DATA_SPANS, row: int, column: int) -> Optional[DATA_SPAN]:
@@ -26,6 +46,34 @@ def get_span(spans: DATA_SPANS, row: int, column: int) -> Optional[DATA_SPAN]:
         if p in sps:
             return sps
 
+    return None
+
+
+def get_span_index(spans_arr: SPANS_ARRAY, row: int, column: int) -> Optional[int]:
+    """
+    returns the index of the span contains this (row, column) pair;
+       works faster than get_span and must replace it in future
+
+    Parameters
+    ----------
+    spans_arr: Nx3 array where 1st column is the span index, 2nd -- rows, 3rd -- cols
+    row
+    column
+
+    Returns
+    -------
+
+    >>> sps = [[(1, 2), (5, 6)], [(7, 8)], [(9, 9), (8, 8)], [(6, 5), (5, 5)]]
+    >>> sps_arr = convert_spans_to_array(sps)
+    >>> assert get_span_index(sps_arr, 5, 5) == 3
+    >>> assert get_span_index(sps_arr, 5, 6) == 0
+    >>> assert get_span_index(sps_arr, 7, 8) == 1
+    >>> assert get_span_index(sps_arr, 5, 15) is None
+    """
+    mask = (spans_arr[:, 1] == row) & (spans_arr[:, 2] == column)
+    indexes = spans_arr[mask]
+    if indexes.size:
+        return indexes[0, 0].item()
     return None
 
 

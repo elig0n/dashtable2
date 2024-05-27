@@ -5,7 +5,7 @@ import copy
 
 from .aliases import CHECKED_MASK_CREATOR, CANDIDATES_MASK_CREATOR, DATA_TABLE
 
-from .get_output_column_sizes import get_output_column_widths, get_output_row_heights
+from .get_output_sizes import get_output_column_widths, get_output_row_heights
 
 from ..dashutils.aliases import DATA_SPANS
 from ..dashutils import add_cushions
