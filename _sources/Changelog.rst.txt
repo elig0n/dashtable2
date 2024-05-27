@@ -1,6 +1,9 @@
 Changelog
 =====
 
+* 1.4.13
+    - move `dashtable.utils` logic to `dashtable.dashutils`
+
 * 1.4.12
     - import fixes
 
