@@ -2,7 +2,7 @@
 from typing import List, Callable, Any
 from typing_extensions import TypeAlias
 
-from ..utils.aliases import array2D, array1Dmask, array2Dmask
+from ..dashutils.aliases import array1Dmask, array2D, array2Dmask
 
 from .cell import LTRB
 

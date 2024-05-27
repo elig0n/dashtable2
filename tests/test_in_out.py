@@ -11,7 +11,7 @@ PROJECT_PATH = Path(__file__).parents[1]
 sys.path.insert(0, str(PROJECT_PATH))
 
 import dashtable
-from dashtable.utils.files import read_file
+from dashtable.dashutils.files import read_file
 
 
 STATIC_PATH = os.path.join(PROJECT_PATH, 'tests', 'in-out')

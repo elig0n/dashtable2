@@ -1,13 +1,7 @@
-
-
-
-import os
 import sys
 
 sys.path.append('../')
 
-from dashtable.utils.files import read_json, write_text
-from dashtable.exceptions import NonMergableException
 from dashtable.data2rst import data2rst
 
 

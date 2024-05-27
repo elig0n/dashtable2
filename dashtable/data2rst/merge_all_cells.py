@@ -8,7 +8,7 @@ import numpy as np
 
 from .aliases import CANDIDATES_MASK_CREATOR, CHECKED_MASK_CREATOR
 
-from ..utils.aliases import array2D, array1Dmask, array2Dmask
+from ..dashutils.aliases import array1Dmask, array2D, array2Dmask
 from ..exceptions import NonMergableException
 
 from .cell import Cell, LTRB

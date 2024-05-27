@@ -3,7 +3,6 @@ import subprocess
 import os
 
 from dashtable import html2rst, html2md
-from dashtable.utils.files import read_text
 
 CWD = os.getcwd()
 
