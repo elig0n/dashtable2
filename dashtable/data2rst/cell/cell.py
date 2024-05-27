@@ -1,7 +1,14 @@
 
 from typing import Tuple
+from typing_extensions import TypeAlias
 
 from .is_only import is_only
+
+
+LTRB: TypeAlias = Tuple[int, int, int, int]
+"""
+(left, top, right, bottom) bounds of the cell
+"""
 
 
 class Cell:
@@ -148,7 +155,7 @@ class Cell:
         return False
 
     @property
-    def left_top_right_bottom(self) -> Tuple[int, int, int, int]:
+    def left_top_right_bottom(self) -> LTRB:
         left = self.column
         top = self.row
         right = left + self.column_count

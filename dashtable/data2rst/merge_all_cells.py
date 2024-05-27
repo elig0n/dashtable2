@@ -1,5 +1,6 @@
 
-from typing import List, Dict, Tuple
+from typing import List, Dict, Tuple, Callable
+from typing_extensions import TypeAlias
 
 from collections import defaultdict
 
@@ -8,16 +9,44 @@ import numpy as np
 from ..utils.aliases import array2D, array1Dmask
 from ..exceptions import NonMergableException
 
-from .cell import Cell
+from .cell import Cell, LTRB
 from .cell import get_merge_direction
 from .cell import merge_cells
+
+
+CANDIDATES_MASK_CREATOR: TypeAlias = Callable[[array2D, LTRB], array1Dmask]
+"""
+function ( 
+    left-top-right-bottom array for each cell (Nx4 array), 
+    (left, top, right, bottom) value of the current cell
+) -> bool mask where True means current cell neighbours
+
+this result mask determines the cells to check their mergability with the current cell;
+    the current cell can be included in this mask, but there is no sense to do it
+
+this function is called many times so it is necessary to implement it to be as fast as possible
+    and to not include too many false candidates
+"""
 
 
 def _get_empty_mask(size: int):
     return np.zeros((size, size), dtype=bool)
 
 
-def _get_candidates_mask(ltrb: Tuple[int, int, int, int], boxes: array2D) -> array1Dmask:
+def get_candidates_mask_v1(boxes: array2D, ltrb: LTRB) -> array1Dmask:
+    """
+    simplest candidates filter,
+        does not exclude the cell itself and the most of the cells from the same row and same column
+
+    Parameters
+    ----------
+    boxes
+    ltrb
+
+    Returns
+    -------
+
+    """
     l, t, r, b = ltrb
     candidates_mask = (
         (
@@ -29,20 +58,35 @@ def _get_candidates_mask(ltrb: Tuple[int, int, int, int], boxes: array2D) -> arr
     return candidates_mask
 
 
-# def _get_candidates_mask(ltrb: Tuple[int, int, int, int], boxes: array2D) -> array1Dmask:
-#     l, t, r, b = ltrb
-#     candidates_mask = (
-#         (
-#             (boxes[:, 0] == l) & (boxes[:, 2] == r) & (
-#                 (boxes[:, 1] == b) | (boxes[:, 3] == t)
-#             )
-#         ) | (
-#             (boxes[:, 1] == t) & (boxes[:, 3] == b) & (
-#                 (boxes[:, 0] == r) | (boxes[:, 2] == l)
-#             )
-#         )
-#     )
-#     return candidates_mask
+def get_candidates_mask_v2(boxes: array2D, ltrb: LTRB) -> array1Dmask:
+    """
+    comparing with v1, extremely filters candidates but works 2-times slower and therefore
+        speeds up `merge_all_cells` by only 10%
+
+    it is highly recommended to implement this logic using Cython or Numba
+
+    Parameters
+    ----------
+    boxes
+    ltrb
+
+    Returns
+    -------
+
+    """
+    l, t, r, b = ltrb
+    candidates_mask = (
+        (
+            (boxes[:, 0] == l) & (boxes[:, 2] == r) & (
+                (boxes[:, 1] == b) | (boxes[:, 3] == t)
+            )
+        ) | (
+            (boxes[:, 1] == t) & (boxes[:, 3] == b) & (
+                (boxes[:, 0] == r) | (boxes[:, 2] == l)
+            )
+        )
+    )
+    return candidates_mask
 
 
 def merge_all_cells_v1(cells: List[Cell]) -> str:
@@ -99,13 +143,17 @@ def merge_all_cells_v1(cells: List[Cell]) -> str:
 
 
 # @profile
-def merge_all_cells(cells: List[Cell]) -> str:
+def merge_all_cells(
+    cells: List[Cell],
+    candidates_mask_creator: CANDIDATES_MASK_CREATOR = get_candidates_mask_v2
+) -> str:
     """
     Loop through list of cells and piece them together one by one
 
     Parameters
     ----------
     cells : list of dashtable.data2rst.Cell
+    candidates_mask_creator:
 
     Returns
     -------
@@ -158,7 +206,7 @@ def merge_all_cells(cells: List[Cell]) -> str:
     ltrb_array: array2D = np.array([c.left_top_right_bottom for c in cells])
     """array of (left, top, right, bottom) values for each cell"""
     for i, ltrb in enumerate(ltrb_array):
-        candidates_mask = _get_candidates_mask(ltrb, ltrb_array)
+        candidates_mask = candidates_mask_creator(ltrb_array, ltrb)
         """
         mask of cells which may be the neighbours because of simplest criteria part
         
@@ -265,7 +313,7 @@ def merge_all_cells(cells: List[Cell]) -> str:
                 ltrb = c1.left_top_right_bottom
                 ltrb_array[_index] = ltrb
 
-                candidates_mask = _get_candidates_mask(ltrb, ltrb_array)
+                candidates_mask = candidates_mask_creator(ltrb_array, ltrb)
                 neg = np.where(~candidates_mask)[0]
 
                 count_to_check -= neg.size - checked[_index, neg].sum()
