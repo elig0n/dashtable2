@@ -23,4 +23,4 @@ PathLike: TypeAlias = Union[str, os.PathLike]
 array1D: TypeAlias = np.ndarray
 array1Dmask: TypeAlias = np.ndarray
 array2D: TypeAlias = np.ndarray
-
+array2Dmask: TypeAlias = np.ndarray

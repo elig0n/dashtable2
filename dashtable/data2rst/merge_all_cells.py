@@ -6,13 +6,14 @@ from collections import defaultdict
 
 import numpy as np
 
-from ..utils.aliases import array2D, array1Dmask
+from ..utils.aliases import array2D, array1Dmask, array2Dmask
 from ..exceptions import NonMergableException
 
 from .cell import Cell, LTRB
 from .cell import get_merge_direction
 from .cell import merge_cells
 
+#region ALIASES
 
 CANDIDATES_MASK_CREATOR: TypeAlias = Callable[[array2D, LTRB], array1Dmask]
 """
@@ -28,9 +29,27 @@ this function is called many times so it is necessary to implement it to be as f
     and to not include too many false candidates
 """
 
+CHECKED_MASK_CREATOR: TypeAlias = Callable[[array2D, CANDIDATES_MASK_CREATOR], array2Dmask]
+"""
+function (
+    left-top-right-bottom array for each cell (Nx4 array),
+    helper function to get cell neighbours (can be ignored in your own implementations)
+) -> 2D mask (NxN) where True means to NOT CHECK this cells pairs in the algorithm 
+        (like they are not neighbours and there is no sense to check them)
 
-def _get_empty_mask(size: int):
+this function is called only one time and recommended to be implemented to be fast
+"""
+
+#endregion
+
+#region UTILS
+
+def _get_empty_mask(size: int) -> array2Dmask:
     return np.zeros((size, size), dtype=bool)
+
+
+def _get_diag_mask(size: int) -> array2Dmask:
+    return np.diag(np.ones(size, dtype=bool))
 
 
 def get_candidates_mask_v1(boxes: array2D, ltrb: LTRB) -> array1Dmask:
@@ -89,6 +108,74 @@ def get_candidates_mask_v2(boxes: array2D, ltrb: LTRB) -> array1Dmask:
     return candidates_mask
 
 
+def get_checked_mask_v1(
+    boxes: array2D,
+    candidates_mask_creator: CANDIDATES_MASK_CREATOR = get_candidates_mask_v2
+) -> array2Dmask:
+    """
+    simplest implementation
+
+    Parameters
+    ----------
+    boxes
+    candidates_mask_creator
+
+    Returns
+    -------
+
+    """
+    checked = _get_empty_mask(boxes.shape[0])
+    """mask for caching that the cells pair must be checked or not"""
+
+    for i, ltrb in enumerate(boxes):
+        candidates_mask = candidates_mask_creator(boxes, ltrb)
+        """
+        mask of cells which may be the neighbours because of simplest criteria part
+
+        other cells definitely cannot be neighbours and therefore must be excepted for speed up
+        """
+        neg = ~candidates_mask
+        checked[i, neg] = True
+        checked[neg, i] = True
+
+    return checked
+
+
+def get_checked_mask_v2(
+    boxes: array2D,
+    candidates_mask_creator: CANDIDATES_MASK_CREATOR = get_candidates_mask_v2
+) -> array2Dmask:
+    """
+    simplest implementation
+
+    Parameters
+    ----------
+    boxes
+    candidates_mask_creator
+
+    Returns
+    -------
+
+    """
+    checked = _get_diag_mask(boxes.shape[0])
+    """mask for caching that the cells pair must be checked or not"""
+
+    for i, ltrb in enumerate(boxes[:-1], 1):
+        candidates_mask = candidates_mask_creator(boxes[i:], ltrb)
+        """
+        mask of cells which may be the neighbours because of simplest criteria part
+
+        other cells definitely cannot be neighbours and therefore must be excepted for speed up
+        """
+        neg = i + np.where(~candidates_mask)[0]
+        checked[i - 1, neg] = True
+        checked[neg, i - 1] = True
+
+    return checked
+
+#endregion
+
+
 def merge_all_cells_v1(cells: List[Cell]) -> str:
     """
     Loop through list of cells and piece them together one by one
@@ -145,7 +232,8 @@ def merge_all_cells_v1(cells: List[Cell]) -> str:
 # @profile
 def merge_all_cells(
     cells: List[Cell],
-    candidates_mask_creator: CANDIDATES_MASK_CREATOR = get_candidates_mask_v2
+    candidates_mask_creator: CANDIDATES_MASK_CREATOR = get_candidates_mask_v2,
+    checked_mask_creator: CHECKED_MASK_CREATOR = get_checked_mask_v2
 ) -> str:
     """
     Loop through list of cells and piece them together one by one
@@ -154,6 +242,7 @@ def merge_all_cells(
     ----------
     cells : list of dashtable.data2rst.Cell
     candidates_mask_creator:
+    checked_mask_creator:
 
     Returns
     -------
@@ -172,9 +261,6 @@ def merge_all_cells(
 
     init_cells = count_cells = len(cells)
 
-    checked = _get_empty_mask(count_cells)
-    """mask for caching that the cells pair must be checked or not"""
-
     checked_available_mask = np.ones(count_cells, dtype=bool)
     """
     mask of the still available indexes (of rows/cols)
@@ -189,34 +275,26 @@ def merge_all_cells(
     used for translating current indexes to real
     """
 
-    count_to_check = checked.size
-    """
-    count of pairs that still are not checked
-    
-    always equal to 
-        checked.size - checked.sum()
-    but much more performant than computing this value any time
-    """
-
     #
     #
-    # disable 90%+ of pairs which are definitely not neighbours
+    # create `checked` mask
+    #   with disabling 90%+ of pairs which are definitely not neighbours
     #
     #
     ltrb_array: array2D = np.array([c.left_top_right_bottom for c in cells])
     """array of (left, top, right, bottom) values for each cell"""
-    for i, ltrb in enumerate(ltrb_array):
-        candidates_mask = candidates_mask_creator(ltrb_array, ltrb)
-        """
-        mask of cells which may be the neighbours because of simplest criteria part
-        
-        other cells definitely cannot be neighbours and therefore must be excepted for speed up
-        """
-        neg = ~candidates_mask
-        checked[i, neg] = True
-        checked[neg, i] = True
 
-    count_to_check -= checked.sum()  # decrease checking-required count
+    checked = checked_mask_creator(ltrb_array, candidates_mask_creator)
+    """mask for caching that the cells pair must be checked or not"""
+
+    count_to_check = checked.size - checked.sum()
+    """
+    count of pairs that still are not checked
+
+    always equal to 
+        checked.size - checked.sum()
+    but much more performant than computing this value any time
+    """
 
     #endregion
 
