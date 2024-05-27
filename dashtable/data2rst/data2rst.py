@@ -3,7 +3,7 @@ from typing import List, Tuple, Sequence, Optional, Any
 
 import copy
 
-from aliases import CHECKED_MASK_CREATOR, CANDIDATES_MASK_CREATOR, DATA_TABLE, DATA_SPANS
+from .aliases import CHECKED_MASK_CREATOR, CANDIDATES_MASK_CREATOR, DATA_TABLE, DATA_SPANS
 
 from .get_output_column_sizes import get_output_column_widths, get_output_row_heights
 
