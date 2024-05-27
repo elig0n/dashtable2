@@ -7,7 +7,7 @@ Changelog
         - add arguments `candidates_mask_creator` and `checked_mask_creator` with an ability to select and even implement custom versions to speed up `data2rst` merge step
         - create `DATA_TABLE`, `DATA_SPANS` aliases and use them in many places
         - some functions refactor
-        - substantial speed up of `get_output_column_widths`, `get_output_row_heights` functions
+        - substantial speed up of `get_output_column_widths`, `get_output_row_heights`, `table_cells_2_spans` functions
 
 * 1.4.10
     - spans fixes
