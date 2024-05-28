@@ -1,6 +1,10 @@
 Changelog
 =====
 
+* 1.4.14
+    * `data2rst`
+        - speed up some cell properties
+
 * 1.4.13
     - move `dashtable.utils` logic to `dashtable.dashutils`
 
