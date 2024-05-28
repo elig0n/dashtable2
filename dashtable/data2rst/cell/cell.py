@@ -103,8 +103,11 @@ class Cell:
             The number of sections on the top
         """
 
-        top_line = self.text.split('\n')[0]
-        sections = len(top_line.split('+')) - 2
+        t = self.text
+        i = t.find('\n')
+        if i != -1:
+            t = t[:i]
+        sections = t.count('+') - 1
 
         return sections
 
@@ -118,8 +121,11 @@ class Cell:
         sections : int
             The number of sections on the top
         """
-        bottom_line = self.text.split('\n')[-1]
-        sections = len(bottom_line.split('+')) - 2
+        t = self.text
+        i = t.rfind('\n')
+        if i != -1:
+            t = t[i + 1:]
+        sections = t.count('+') - 1
 
         return sections
 
