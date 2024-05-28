@@ -59,6 +59,11 @@ def get_merge_direction(cell1: Cell, cell2: Cell) -> MERGE_DIRECTION:
     Returns
     -------
         The side onto which cell2 can be merged
+
+    Notes
+    -------
+    this function is asymmetric: it checks only the direction from first cell to second
+        it is possible to create and use symmetric function but it will increase performance by only 5-10%
     """
     left1, top1, right1, bottom1 = cell1.left_top_right_bottom
     left2, top2, right2, bottom2 = cell2.left_top_right_bottom
