@@ -65,15 +65,16 @@ class Cell:
         sections : int
             The number of sections on the left
         """
-        lines = self.text.split('\n')
-        sections = 0
-
-        for i in range(len(lines)):
-            if lines[i].startswith('+'):
-                sections += 1
-        sections -= 1
-
-        return sections
+        # lines = self.text.split('\n')
+        # sections = 0
+        #
+        # for i in range(len(lines)):
+        #     if lines[i].startswith('+'):
+        #         sections += 1
+        # sections -= 1
+        #
+        # return sections
+        return self.text.count('\n+')
 
     @property
     def right_sections(self):
@@ -85,12 +86,13 @@ class Cell:
         sections : int
             The number of sections on the right
         """
-        lines = self.text.split('\n')
-        sections = 0
-        for i in range(len(lines)):
-            if lines[i].endswith('+'):
-                sections += 1
-        return sections - 1
+        # lines = self.text.split('\n')
+        # sections = 0
+        # for i in range(len(lines)):
+        #     if lines[i].endswith('+'):
+        #         sections += 1
+        # return sections - 1
+        return self.text.count('+\n')
 
     @property
     def top_sections(self):
