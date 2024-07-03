@@ -50,8 +50,11 @@
 <li class="toctree-l1"><a class="reference internal" href="Installation.html">Installation</a></li>
 <li class="toctree-l1"><a class="reference internal" href="Dependencies.html">Dependencies</a></li>
 <li class="toctree-l1 current"><a class="current reference internal" href="#">Code</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#dashtable.convert_table_spans_to_box_to_text"><code class="docutils literal notranslate"><span class="pre">convert_table_spans_to_box_to_text()</span></code></a></li>
 <li class="toctree-l2"><a class="reference internal" href="#dashtable.data2md"><code class="docutils literal notranslate"><span class="pre">data2md()</span></code></a></li>
 <li class="toctree-l2"><a class="reference internal" href="#dashtable.data2rst"><code class="docutils literal notranslate"><span class="pre">data2rst()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="#dashtable.data2rst_enhanced"><code class="docutils literal notranslate"><span class="pre">data2rst_enhanced()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="#dashtable.data2rst_v2"><code class="docutils literal notranslate"><span class="pre">data2rst_v2()</span></code></a></li>
 <li class="toctree-l2"><a class="reference internal" href="#dashtable.data2simplerst"><code class="docutils literal notranslate"><span class="pre">data2simplerst()</span></code></a></li>
 <li class="toctree-l2"><a class="reference internal" href="#dashtable.grid2data"><code class="docutils literal notranslate"><span class="pre">grid2data()</span></code></a></li>
 <li class="toctree-l2"><a class="reference internal" href="#dashtable.html2data"><code class="docutils literal notranslate"><span class="pre">html2data()</span></code></a></li>
@@ -88,6 +91,25 @@
              
   <section id="module-dashtable">
 <span id="code"></span><h1>Code<a class="headerlink" href="#module-dashtable" title="Permalink to this heading"></a></h1>
+<dl class="py function">
+<dt class="sig sig-object py" id="dashtable.convert_table_spans_to_box_to_text">
+<span class="sig-prename descclassname"><span class="pre">dashtable.</span></span><span class="sig-name descname"><span class="pre">convert_table_spans_to_box_to_text</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">table</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">List</span><span class="p"><span class="pre">[</span></span><span class="pre">List</span><span class="p"><span class="pre">[</span></span><span class="pre">Any</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span></span></em>, <em class="sig-param"><span class="n"><span class="pre">spans</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Sequence</span><span class="p"><span class="pre">[</span></span><span class="pre">Sequence</span><span class="p"><span class="pre">[</span></span><span class="pre">Tuple</span><span class="p"><span class="pre">[</span></span><span class="pre">int</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">int</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">Dict</span><span class="p"><span class="pre">[</span></span><span class="pre">Tuple</span><span class="p"><span class="pre">[</span></span><span class="pre">int</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">int</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">int</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">int</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">str</span><span class="p"><span class="pre">]</span></span></span></span><a class="headerlink" href="#dashtable.convert_table_spans_to_box_to_text" title="Permalink to this definition"></a></dt>
+<dd><p>converts tables and spans (<cite>data2rst</cite> arguments) to <cite>data2rst_enhanced</cite> argument</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">_</span> <span class="o">=</span> <span class="n">convert_table_spans_to_box_to_text</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">spans</span> <span class="o">=</span> <span class="p">[</span>
+<span class="gp">... </span>    <span class="p">[</span> <span class="p">[</span><span class="mi">2</span><span class="p">,</span> <span class="mi">1</span><span class="p">],</span> <span class="p">[</span><span class="mi">2</span><span class="p">,</span> <span class="mi">2</span><span class="p">]</span> <span class="p">],</span>
+<span class="gp">... </span><span class="p">]</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">table</span> <span class="o">=</span> <span class="p">[</span>
+<span class="gp">... </span>    <span class="p">[</span><span class="s2">&quot;Header 1&quot;</span><span class="p">,</span> <span class="s2">&quot;Header 2&quot;</span><span class="p">,</span> <span class="s2">&quot;Header 3&quot;</span><span class="p">],</span>
+<span class="gp">... </span>    <span class="p">[</span><span class="s2">&quot;body row 1&quot;</span><span class="p">,</span> <span class="s2">&quot;column 2&quot;</span><span class="p">,</span> <span class="s2">&quot;column 3&quot;</span><span class="p">],</span>
+<span class="gp">... </span>    <span class="p">[</span><span class="s2">&quot;body row 2&quot;</span><span class="p">,</span> <span class="s2">&quot;Cells may span columns.&quot;</span><span class="p">,</span> <span class="s2">&quot;&quot;</span><span class="p">],</span>
+<span class="gp">... </span><span class="p">]</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">_</span><span class="p">(</span><span class="n">table</span><span class="p">,</span> <span class="n">spans</span><span class="p">)</span>
+<span class="go">{(0, 0, 0, 0): &#39;Header 1&#39;, (0, 1, 0, 1): &#39;Header 2&#39;, (0, 2, 0, 2): &#39;Header 3&#39;, (1, 0, 1, 0): &#39;body row 1&#39;, (1, 1, 1, 1): &#39;column 2&#39;, (1, 2, 1, 2): &#39;column 3&#39;, (2, 0, 2, 0): &#39;body row 2&#39;, (2, 1, 2, 2): &#39;Cells may span columns.&#39;}</span>
+</pre></div>
+</div>
+</dd></dl>
+
 <dl class="py function">
 <dt class="sig sig-object py" id="dashtable.data2md">
 <span class="sig-prename descclassname"><span class="pre">dashtable.</span></span><span class="sig-name descname"><span class="pre">data2md</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">table</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#dashtable.data2md" title="Permalink to this definition"></a></dt>
@@ -180,6 +202,93 @@ example:</p>
 <span class="go">+------------+-------------+-----------+</span>
 </pre></div>
 </div>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="dashtable.data2rst_enhanced">
+<span class="sig-prename descclassname"><span class="pre">dashtable.</span></span><span class="sig-name descname"><span class="pre">data2rst_enhanced</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">cell_box_to_text</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Dict</span><span class="p"><span class="pre">[</span></span><span class="pre">Tuple</span><span class="p"><span class="pre">[</span></span><span class="pre">int</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">int</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">int</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">int</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">str</span><span class="p"><span class="pre">]</span></span></span></em>, <em class="sig-param"><span class="n"><span class="pre">missing_cell_value</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">'</span> <span class="pre">'</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">str</span></span></span><a class="headerlink" href="#dashtable.data2rst_enhanced" title="Permalink to this definition"></a></dt>
+<dd><dl class="simple">
+<dt>works close to <cite>data2rst</cite> but much faster and more flexible</dt><dd><p>because it uses completely different algorithm;
+preferred for using before html conversion;
+now this function is not customized to centerize texts and so on and maybe its not necessary</p>
+</dd>
+</dl>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>cell_box_to_text</strong> (<em>dictionary {</em><em> (</em><em>row start</em><em>, </em><em>col start</em><em>, </em><em>row end</em><em>, </em><em>col end</em><em>) </em><em>-&gt; cell string value };</em>) – <dl class="simple">
+<dt>row/col ends must be included (use cuts [start; end] instead of [start;end) )</dt><dd><p>and be integers &gt;= 0; if all starts &gt; 0 then the coordinates will be shifted to start from 0;</p>
+</dd>
+</dl>
+<p>it is not mandatory to provide all table cells including empty because they will be created automatically</p>
+</p></li>
+<li><p><strong>missing_cell_value</strong> (<em>string value for missing cells</em>) – </p></li>
+</ul>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p>table view in rst format</p>
+</dd>
+</dl>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="k">def</span> <span class="nf">_run</span><span class="p">(</span><span class="n">cells</span><span class="p">:</span> <span class="n">Iterable</span><span class="p">[</span><span class="n">CELL_LOCATION</span><span class="p">]):</span>
+<span class="gp">... </span>    <span class="n">cells</span> <span class="o">=</span> <span class="p">{</span><span class="n">b</span><span class="p">:</span> <span class="nb">str</span><span class="p">(</span><span class="n">b</span><span class="p">)</span> <span class="k">for</span> <span class="n">b</span> <span class="ow">in</span> <span class="n">cells</span><span class="p">}</span>
+<span class="gp">... </span>    <span class="k">assert</span> <span class="n">cells</span>
+<span class="gp">... </span>    <span class="nb">print</span><span class="p">(</span><span class="n">data2rst_enhanced</span><span class="p">(</span><span class="n">cells</span><span class="p">))</span>
+</pre></div>
+</div>
+<p>Simplest case:
+&gt;&gt;&gt; _run([(0, 0, 0, 0), (1, 1, 1, 1)])
++————–+————–+
+| (0, 0, 0, 0) |              |
++————–+————–+
+|              | (1, 1, 1, 1) |
++————–+————–+</p>
+<p>More heavy case:
+&gt;&gt;&gt; _run([(0, 0, 0, 0), (1, 1, 1, 1), (0, 1, 0, 2), (1, 0, 2, 0)])
++————–+——————+
+| (0, 0, 0, 0) | (0, 1, 0, 2)     |
++————–+————–+—+
+| (1, 0, 2, 0) | (1, 1, 1, 1) |   |
+|              +————–+—+
+|              |              |   |
++————–+————–+—+</p>
+<p>This case cannot be performed by <cite>data2rst</cite>:
+&gt;&gt;&gt; _run([(0, 0, 0, 0), (1, 2, 1, 2), (0, 1, 0, 2), (1, 0, 1, 1)])
++————–+—————-+
+| (0, 0, 0, 0) | (0, 1, 0, 2)   |
++————–+-+————–+
+| (1, 0, 1, 1)   | (1, 2, 1, 2) |
++—————-+————–+</p>
+<p>Usual test:
+&gt;&gt;&gt; spans = [
+…     [ [3, 1], [4, 1] ],
+…     [ [3, 2], [4, 2] ],
+…     [ [2, 1], [2, 2] ],
+… ]
+&gt;&gt;&gt; table = [
+…     [“Header 1”, “Header 2”, “Header 3”],
+…     [“body row 1”, “column 2”, “column 3”],
+…     [“body row 2”, “Cells may span columns.”, “”],
+…     [“body row 3”, “Cells maynspan rows.”, “- Cellsn- containn- blocks.”],
+…     [“body row 4”, “”, “”],
+… ]
+&gt;&gt;&gt; print(data2rst_enhanced(convert_table_spans_to_box_to_text(table, spans)))
++————+————+————+
+| Header 1   | Header 2   | Header 3   |
++————+————+————+
+| body row 1 | column 2   | column 3   |
++————+————+————+
+| body row 2 | Cells may span columns. |
++————+————+————+
+| body row 3 | Cells may  | - Cells    |
++————+ span rows. | - contain  |
+| body row 4 |            | - blocks.  |
++————+————+————+</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="dashtable.data2rst_v2">
+<span class="sig-prename descclassname"><span class="pre">dashtable.</span></span><span class="sig-name descname"><span class="pre">data2rst_v2</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">table</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">List</span><span class="p"><span class="pre">[</span></span><span class="pre">List</span><span class="p"><span class="pre">[</span></span><span class="pre">Any</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span></span></em>, <em class="sig-param"><span class="n"><span class="pre">spans</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Sequence</span><span class="p"><span class="pre">[</span></span><span class="pre">Sequence</span><span class="p"><span class="pre">[</span></span><span class="pre">Tuple</span><span class="p"><span class="pre">[</span></span><span class="pre">int</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">int</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">missing_cell_value</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">'</span> <span class="pre">'</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">str</span></span></span><a class="headerlink" href="#dashtable.data2rst_v2" title="Permalink to this definition"></a></dt>
+<dd><p>uses <cite>data2rst_enhanced</cite> for usual <cite>data2rst</cite> arguments</p>
 </dd></dl>
 
 <dl class="py function">
