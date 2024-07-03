@@ -91,7 +91,7 @@ def read_file(path: PathLike):
     s = Path(path).suffix
     if s == '.json':
         return read_json(path)
-    if s == '.txt':
+    if s.lower() in ('.txt', '.rst'):
         return read_text(path)
 
     raise NotImplemented(f"no processing for ext {s} of file {path}")
