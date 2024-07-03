@@ -1,6 +1,9 @@
 Changelog
 =====
 
+* 1.4.15
+    * create completely new implementations of `data2rst`: `data2rst_v2`/`data2rst_enhanced`
+
 * 1.4.14
     * `data2rst`
         - speed up some cell properties

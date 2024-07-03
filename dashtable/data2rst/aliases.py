@@ -1,5 +1,5 @@
 
-from typing import List, Callable, Any
+from typing import List, Callable, Any, Tuple
 from typing_extensions import TypeAlias
 
 from ..dashutils.aliases import array1Dmask, array2D, array2Dmask
@@ -37,3 +37,9 @@ this function is called only one time and recommended to be implemented to be fa
 """
 
 
+CELL_LOCATION: TypeAlias = Tuple[int, int, int, int]
+"""
+cell coordinates in format (x1, y1, x2, y2) 
+    where X is height dimension and Y is width dimension
+        and ends (x2/y2) are included!
+"""
