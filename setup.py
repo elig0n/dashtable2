@@ -28,7 +28,7 @@ setuptools.setup(
     ],
     version=Path('version.txt').read_text(encoding='utf-8').strip(),
 
-    description='A library for converting a HTML tables into ASCII tables, rowspan and colspan allowed!',
+    description='A library for converting HTML/Markdown/RST tables into ASCII tables and vice versa, rowspan and colspan allowed!',
     long_description=open('README.md').read(),
     long_description_content_type="text/markdown",
 
