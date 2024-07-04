@@ -7,6 +7,7 @@ import itertools
 import numpy as np
 
 from ..dashutils.aliases import array2D, DATA_SPANS
+from ..dashutils.profile import profile
 from .aliases import DATA_TABLE, CELL_LOCATION
 
 
@@ -192,7 +193,7 @@ def convert_table_spans_to_box_to_text(
 
 #endregion
 
-
+# @profile
 def data2rst_enhanced(
     cell_box_to_text: Dict[CELL_LOCATION, str],
     missing_cell_value: str = ' '

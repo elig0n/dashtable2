@@ -15,3 +15,7 @@ test: doctest pytest
 
 amend:
 	git commit --amend
+
+
+prof:
+	LINE_PROFILE=1 python examples/just-data2rst-enhanced.py

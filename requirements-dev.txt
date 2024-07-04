@@ -5,4 +5,5 @@ sphinxcontrib-napoleon
 sphinx-rtd-theme
 pytest
 ipython
+line_profiler
 
