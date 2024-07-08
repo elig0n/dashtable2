@@ -1,10 +1,16 @@
+
+from typing import Tuple
+
+from ..dashutils.aliases import DATA_SPANS, DATA_STR_TABLE
+
 from .extract_spans import extract_spans
 from .get_html_column_count import get_html_column_count
 from .get_html_row_count import get_html_row_count
 from .extract_table import extract_table
 from .headers_present import headers_present
 
-def html2data(html_string):
+
+def html2data(html_string: str) -> Tuple[DATA_STR_TABLE, DATA_SPANS, bool]:
     """
     Convert an html table to a data table and spans.
 
@@ -21,7 +27,7 @@ def html2data(html_string):
         are merged in a table.
     use_headers : bool
     """
-    spans = extract_spans(html_string)
+    spans = extract_spans(html_string) or []
 
     column_count = get_html_column_count(html_string)
     row_count = get_html_row_count(spans)

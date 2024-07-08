@@ -1,5 +1,5 @@
 
-from typing import Sequence, Tuple, Union
+from typing import Sequence, Tuple, Union, List
 from typing_extensions import TypeAlias
 
 
@@ -26,3 +26,6 @@ SPANS_ARRAY: TypeAlias = array2D
 Nx3 array where 1st column is the span index, 2nd -- rows, 3rd -- cols
 """
 
+
+DATA_STR_TABLE: TypeAlias = List[List[str]]
+"""list of lists of str"""
