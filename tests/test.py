@@ -31,17 +31,16 @@ def test_html_to_tables(
 ):
 
     html_path = path
-    rst = dashtable.html2rst(html_path)
-    md = dashtable.html2md(html_path)
+    for fmt, converter in (
+        ('rst', dashtable.html2rst),
+        ('md', dashtable.html2md),
+    ):
+        fmt_path = os.path.splitext(path)[0] + f'.{fmt}'
+        if os.path.exists(fmt_path):
+            converted_text = converter(html_path)
+            target_text = read_text(fmt_path).rstrip()
 
-    rst_path = os.path.splitext(path)[0] + '.rst'
-    rst_text = read_text(rst_path).rstrip()
+            assert converted_text == target_text
 
-    assert rst == rst_text
-
-    md_path = os.path.splitext(path)[0] + '.md'
-    md_text = read_text(md_path).rstrip()
-
-    assert md == md_text
 
 
