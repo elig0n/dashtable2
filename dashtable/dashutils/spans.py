@@ -26,12 +26,12 @@ def convert_spans_to_array(spans: DATA_SPANS) -> SPANS_ARRAY:
 
 def get_span(spans: DATA_SPANS, row: int, column: int) -> Optional[DATA_SPAN]:
     """
-    Gets the span containing the [row, column] pair
+    Gets the span containing the (row, column) pair
 
     Parameters
     ----------
     spans : list of lists of lists
-        A list containing spans, which are lists of [row, column] pairs
+        A list containing spans, which are lists of (row, column) pairs
         that define where a span is inside a table.
     row :
     column :
@@ -39,7 +39,7 @@ def get_span(spans: DATA_SPANS, row: int, column: int) -> Optional[DATA_SPAN]:
     Returns
     -------
     span : list of lists
-        A span containing the [row, column] pair
+        A span containing the (row, column) pair
     """
     p = (row, column)
     for sps in spans:
