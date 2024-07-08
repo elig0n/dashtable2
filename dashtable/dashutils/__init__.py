@@ -9,3 +9,6 @@ from .spans import get_span, \
 from .make_empty_table import make_empty_table
 from .make_span import make_span
 from .multis_2_mono import multis_2_mono
+from .cuts_resizer import CutsResizer
+
+

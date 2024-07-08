@@ -1,6 +1,11 @@
 Changelog
 =====
 
+* 1.4.17:
+    * `data2rst_enhanced`: remove empty columns + minor speed ups
+    * make public and add `CutsResizer` class to `dashutils`
+
+
 * 1.4.16
     * `data2rst_enhanced`: remove empty lines
     * `html2rst` uses more fast and robust conversion in some cases

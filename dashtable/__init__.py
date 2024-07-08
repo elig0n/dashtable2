@@ -10,9 +10,10 @@ __all__ = [
     "data2simplerst",
     "grid2data",
     "simple2data",
-    "dashutils"
+    "dashutils",
 ]
 
+from .dashutils import CutsResizer
 from .data2md import data2md
 from .data2rst import data2rst, data2rst_enhanced, data2rst_v2, convert_table_spans_to_box_to_text
 from .data2simplerst import data2simplerst
