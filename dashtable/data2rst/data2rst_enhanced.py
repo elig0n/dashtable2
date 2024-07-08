@@ -1,13 +1,9 @@
 
 from typing import Dict, Tuple, Iterable, Union, Sequence, List, Optional
-from typing_extensions import TypeAlias
-
-import itertools
-import operator
 
 import numpy as np
 
-from ..dashutils.aliases import array1D, array2D, DATA_SPANS
+from ..dashutils.aliases import Number, array1D, array2D, DATA_SPANS
 from ..dashutils.profile import profile
 from .aliases import DATA_TABLE, CELL_LOCATION
 
@@ -126,7 +122,7 @@ class _Cuts:
     def __repr__(self):
         return str(list(map(tuple, self.cuts.tolist())))
 
-    def ensure_min_length(self, index: int, value: int):
+    def ensure_min_length(self, index: int, value: Number):
         """
         ensures whether the whole dimension for index have at least this length
 
@@ -147,7 +143,7 @@ class _Cuts:
         arr[arr >= right] += value - current
 
     # @profile
-    def ensure_min_lens(self, lens: array1D):
+    def ensure_min_lens(self, lens: Union[array1D, Sequence[Number]]):
         """
         vectorized (fast) version of ensure_min_length for each cut
 

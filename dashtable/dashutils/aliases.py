@@ -6,6 +6,7 @@ from typing_extensions import TypeAlias
 import os
 import numpy as np
 
+Number: TypeAlias = Union[int, float]
 
 PathLike: TypeAlias = Union[str, os.PathLike]
 array1D: TypeAlias = np.ndarray
