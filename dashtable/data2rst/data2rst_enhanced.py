@@ -3,6 +3,7 @@ from typing import Dict, Tuple, Iterable, Union, Sequence, List, Optional
 from typing_extensions import TypeAlias
 
 import itertools
+import operator
 
 import numpy as np
 
@@ -310,16 +311,31 @@ def data2rst_enhanced(
     _add_borders_to_coords(X)
     _add_borders_to_coords(Y)
 
+    #
     # fit lengths
+    #
     Xc = _Cuts(X)
     Yc = _Cuts(Y)
-    for i, lines in enumerate(dct.values()):
-        Xc.ensure_min_length(
-            i, 2 + len(lines)  # 2 is for borders
+
+    index_rows_cols = [
+        (
+            i,
+            2 + len(lines),  # 2 is for borders
+            4 + max(len(line) for line in lines)  # 4 is for 2 borders + 2 spaces
         )
-        Yc.ensure_min_length(
-            i, 4 + max(len(line) for line in lines)  # 4 is for 2 borders + 2 spaces
-        )
+        for i, lines in enumerate(dct.values())
+    ]
+    """
+    required rows and columns count for each cell
+    
+    this object is necessary for optimization purposes to not call too many shift operations
+    """
+    index_rows_cols.sort(key=operator.itemgetter(1), reverse=True)  # sort inplace
+    for i, rows, _ in index_rows_cols:
+        Xc.ensure_min_length(i, rows)
+    index_rows_cols.sort(key=operator.itemgetter(2), reverse=True)
+    for i, _, cols in index_rows_cols:
+        Yc.ensure_min_length(i, cols)
 
     chars: array2D = np.full(
         (X[:, 1].max() + 1, Y[:, 1].max() + 1),
@@ -327,8 +343,9 @@ def data2rst_enhanced(
     )
     """2D array of chars will be combined to one rst string"""
 
-    nonempty_lines_mask = np.zeros(chars.shape[0], dtype=bool)
+    nonempty_rows_mask = np.zeros(chars.shape[0], dtype=bool)
     """musk of non-empty table lines (which contain text or some cells corners)"""
+    nonempty_cols_mask = np.zeros(chars.shape[1], dtype=bool)
 
     #
     # fill borders and texts
@@ -343,28 +360,44 @@ def data2rst_enhanced(
 
         _y = y1 + 2
         """column where all lines will start"""
-        for i, line in enumerate(lines, x1 + 1):
-            chars[i, _y: _y + len(line)] = list(line)
-            nonempty_lines_mask[i] = True
+        _x = x1 + 1
+        for i, line in enumerate(lines, _x):
+            col_slice = slice(_y, _y + len(line))
+            chars[i, col_slice] = list(line)
+            nonempty_cols_mask[col_slice] = True
+        nonempty_rows_mask[_x: _x + len(lines)] = True
 
     #
     # fill corners of all cells
     #
+
     for xpair, ypair in zip(X, Y):
-        for x, y in itertools.product(xpair, ypair):
-            chars[x, y] = '+'
-            nonempty_lines_mask[x] = True
+        # for x, y in itertools.product(xpair, ypair):
+        #     chars[x, y] = '+'
+        chars[xpair[0], ypair] = '+'
+        chars[xpair[1], ypair] = '+'
+
+    Xu = np.unique(X.ravel())
+    nonempty_rows_mask[Xu] = True
+    Yu = np.unique(Y.ravel())
+    nonempty_cols_mask[Yu] = True
+
+    # mark cols around corners as nonempty too
+    Yu -= 1
+    nonempty_cols_mask[Yu[Yu >= 0]] = True
+    Yu += 2
+    nonempty_cols_mask[Yu[Yu < nonempty_cols_mask.size]] = True
 
     # #
-    # # mark lines around nonempty as nonempty too
+    # # mark columns around nonempty as nonempty too
     # #
-    # tmp1 = nonempty_lines_mask[:-1].copy()
-    # tmp2 = nonempty_lines_mask[1:].copy()
-    # nonempty_lines_mask[1:] |= tmp1
-    # nonempty_lines_mask[:-1] |= tmp2
+    # tmp1 = nonempty_cols_mask[:-1].copy()
+    # tmp2 = nonempty_cols_mask[1:].copy()
+    # nonempty_cols_mask[1:] |= tmp1
+    # nonempty_cols_mask[:-1] |= tmp2
 
     return '\n'.join(
-        ''.join(line.tolist()) for line in chars[nonempty_lines_mask]
+        ''.join(line.tolist()) for line in chars[nonempty_rows_mask][:, nonempty_cols_mask]
     )
 
 
