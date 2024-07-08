@@ -27,7 +27,7 @@ assert files
     [(f,) for f in files]
 )
 def test_html_to_tables(
-    path: str  # = './static/colspan_input.html'
+    path: str  # = './static/colspan-rowspan4.html'
 ):
 
     html_path = path
