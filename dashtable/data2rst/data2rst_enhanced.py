@@ -327,6 +327,9 @@ def data2rst_enhanced(
     )
     """2D array of chars will be combined to one rst string"""
 
+    nonempty_lines_mask = np.zeros(chars.shape[0], dtype=bool)
+    """musk of non-empty table lines (which contain text or some cells corners)"""
+
     #
     # fill borders and texts
     #
@@ -342,6 +345,7 @@ def data2rst_enhanced(
         """column where all lines will start"""
         for i, line in enumerate(lines, x1 + 1):
             chars[i, _y: _y + len(line)] = list(line)
+            nonempty_lines_mask[i] = True
 
     #
     # fill corners of all cells
@@ -349,9 +353,18 @@ def data2rst_enhanced(
     for xpair, ypair in zip(X, Y):
         for x, y in itertools.product(xpair, ypair):
             chars[x, y] = '+'
+            nonempty_lines_mask[x] = True
+
+    # #
+    # # mark lines around nonempty as nonempty too
+    # #
+    # tmp1 = nonempty_lines_mask[:-1].copy()
+    # tmp2 = nonempty_lines_mask[1:].copy()
+    # nonempty_lines_mask[1:] |= tmp1
+    # nonempty_lines_mask[:-1] |= tmp2
 
     return '\n'.join(
-        ''.join(line.tolist()) for line in chars
+        ''.join(line.tolist()) for line in chars[nonempty_lines_mask]
     )
 
 
