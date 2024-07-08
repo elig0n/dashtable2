@@ -1,6 +1,11 @@
 Changelog
 =====
 
+* 1.4.16
+    * `data2rst_enhanced`: remove empty lines
+    * `html2rst` uses more fast and robust conversion in some cases
+    * `html2data`: spans detection improvement
+
 * 1.4.15
     * create completely new implementations of `data2rst`: `data2rst_v2`/`data2rst_enhanced`
 
