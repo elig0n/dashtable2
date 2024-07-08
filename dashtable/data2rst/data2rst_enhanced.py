@@ -115,8 +115,11 @@ def _add_borders_to_coords(coords: array2D):
     coords[:, 1] += 2
 
 
-class _Cuts:
-    def __init__(self, cuts: Union[array2D, Sequence[Tuple[int, int]]]):
+class CutsResizer:
+    """
+    Simple class provides operations to resize cuts sequences with keeping their relational intersections
+    """
+    def __init__(self, cuts: Union[array2D, Sequence[Tuple[Number, Number]]]):
         self.cuts = cuts if isinstance(cuts, np.ndarray) else np.array(cuts)
 
     def __repr__(self):
@@ -126,7 +129,7 @@ class _Cuts:
         """
         ensures whether the whole dimension for index have at least this length
 
-        >>> c = _Cuts([(1, 3), (4, 5), (3, 8), (6, 7)])
+        >>> c = CutsResizer([(1, 3), (4, 5), (3, 8), (6, 7)])
         >>> c.ensure_min_length(1, value=3); c
         [(1, 3), (4, 6), (3, 9), (7, 8)]
         >>> c.ensure_min_length(-1, value=5); c
@@ -147,7 +150,7 @@ class _Cuts:
         """
         vectorized (fast) version of ensure_min_length for each cut
 
-        >>> c = _Cuts([(1, 3), (4, 5), (3, 8), (6, 7)])
+        >>> c = CutsResizer([(1, 3), (4, 5), (3, 8), (6, 7)])
         >>> c.ensure_min_lens([4, 3, 1, 1]); c
         [(1, 4), (5, 7), (4, 10), (8, 9)]
         >>> c.ensure_min_lens([4, 3, 1, 6]); c
@@ -347,8 +350,8 @@ def data2rst_enhanced(
     #
     # fit lengths
     #
-    Xc = _Cuts(X)
-    Yc = _Cuts(Y)
+    Xc = CutsResizer(X)
+    Yc = CutsResizer(Y)
 
     target_rows_cols = np.array(
         [
