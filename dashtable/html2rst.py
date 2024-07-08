@@ -1,9 +1,10 @@
 import os
 
 from .dashutils.files import read_text
+from .exceptions import NonMergableException
 
 from .html2data import html2data
-from .data2rst import data2rst
+from .data2rst import data2rst, data2rst_v2
 
 
 def html2rst(
@@ -91,4 +92,13 @@ def html2rst(
     if force_headers:
         use_headers = True
 
-    return data2rst(table_data, spans, use_headers, center_cells, center_headers)
+    if use_headers or center_cells:  # options supported only in data2rst v1
+        try:
+            return data2rst(table_data, spans, use_headers, center_cells, center_headers)
+        except NonMergableException:
+            pass
+
+    #
+    # use faster and more robust algorithm
+    #
+    return data2rst_v2(table_data, spans)
