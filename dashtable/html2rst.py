@@ -1,10 +1,17 @@
 import os
+
+from .dashutils.files import read_text
+
 from .html2data import html2data
 from .data2rst import data2rst
 
 
-def html2rst(html_string, force_headers=False, center_cells=False,
-             center_headers=False):
+def html2rst(
+    html_string: str,
+    force_headers: bool = False,
+    center_cells: bool = False,
+    center_headers: bool = False
+) -> str:
     """
     Convert a string or html file to an rst table string.
 
@@ -75,13 +82,9 @@ def html2rst(html_string, force_headers=False, center_cells=False,
     """
 
     if os.path.isfile(html_string):
-        file = open(html_string, 'r', encoding='utf-8')
-        lines = file.readlines()
-        file.close()
-        html_string = ''.join(lines)
+        html_string = read_text(html_string)
 
-    table_data, spans, use_headers = html2data(
-        html_string)
+    table_data, spans, use_headers = html2data(html_string)
 
     if table_data == '':
         return ''
