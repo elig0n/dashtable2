@@ -7,7 +7,7 @@ import operator
 
 import numpy as np
 
-from ..dashutils.aliases import array2D, DATA_SPANS
+from ..dashutils.aliases import array1D, array2D, DATA_SPANS
 from ..dashutils.profile import profile
 from .aliases import DATA_TABLE, CELL_LOCATION
 
@@ -146,6 +146,43 @@ class _Cuts:
 
         arr[arr >= right] += value - current
 
+    # @profile
+    def ensure_min_lens(self, lens: array1D):
+        """
+        vectorized (fast) version of ensure_min_length for each cut
+
+        >>> c = _Cuts([(1, 3), (4, 5), (3, 8), (6, 7)])
+        >>> c.ensure_min_lens([4, 3, 1, 1]); c
+        [(1, 4), (5, 7), (4, 10), (8, 9)]
+        >>> c.ensure_min_lens([4, 3, 1, 6]); c
+        [(1, 4), (5, 7), (4, 14), (8, 13)]
+        >>> c.ensure_min_lens([4, 4, 1, 6]); c
+        [(1, 4), (5, 8), (4, 15), (9, 14)]
+        """
+        if not isinstance(lens, np.ndarray):
+            lens = np.array(lens)
+
+        arr = self.cuts
+        assert lens.size == arr.shape[0], (lens.size, arr.shape[0])
+
+        left = arr[:, 0]
+        right = arr[:, 1]
+        current = right - left + 1
+
+        mask = current < lens
+        indexes = np.where(mask)[0]
+        while indexes.size:
+            lens = lens[mask]
+            current = current[mask]
+            amax = lens.argmax()
+
+            arr[arr >= arr[indexes[amax], 1]] += lens[amax] - current[amax]
+
+            left = arr[indexes, 0]
+            right = arr[indexes, 1]
+            current = right - left + 1
+            mask = current < lens
+            indexes = indexes[mask]
 
 #endregion
 
@@ -317,25 +354,22 @@ def data2rst_enhanced(
     Xc = _Cuts(X)
     Yc = _Cuts(Y)
 
-    index_rows_cols = [
-        (
-            i,
-            2 + len(lines),  # 2 is for borders
-            4 + max(len(line) for line in lines)  # 4 is for 2 borders + 2 spaces
-        )
-        for i, lines in enumerate(dct.values())
-    ]
+    target_rows_cols = np.array(
+        [
+            (
+                2 + len(lines),  # 2 is for borders
+                4 + max(len(line) for line in lines)  # 4 is for 2 borders + 2 spaces
+            )
+            for i, lines in enumerate(dct.values())
+        ]
+    )
     """
     required rows and columns count for each cell
     
     this object is necessary for optimization purposes to not call too many shift operations
     """
-    index_rows_cols.sort(key=operator.itemgetter(1), reverse=True)  # sort inplace
-    for i, rows, _ in index_rows_cols:
-        Xc.ensure_min_length(i, rows)
-    index_rows_cols.sort(key=operator.itemgetter(2), reverse=True)
-    for i, _, cols in index_rows_cols:
-        Yc.ensure_min_length(i, cols)
+    Xc.ensure_min_lens(target_rows_cols[:, 0])
+    Yc.ensure_min_lens(target_rows_cols[:, 1])
 
     chars: array2D = np.full(
         (X[:, 1].max() + 1, Y[:, 1].max() + 1),
@@ -397,7 +431,7 @@ def data2rst_enhanced(
     # nonempty_cols_mask[:-1] |= tmp2
 
     return '\n'.join(
-        ''.join(line.tolist()) for line in chars[nonempty_rows_mask][:, nonempty_cols_mask]
+        ''.join(line[nonempty_cols_mask].tolist()) for line in chars[nonempty_rows_mask]
     )
 
 
