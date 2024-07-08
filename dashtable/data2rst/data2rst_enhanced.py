@@ -170,7 +170,7 @@ def data2rst_enhanced(
     missing_cell_value: str = ' '
 ) -> str:
     """
-    works close to `data2rst` but much faster and more flexible
+    produces almost same results as `data2rst` but much faster and robust
         because it uses completely different algorithm;
         preferred for using before html conversion;
         now this function is not customized to centerize texts and so on and maybe its not necessary
